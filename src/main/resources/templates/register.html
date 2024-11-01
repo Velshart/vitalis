@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+
+<body>
+
+<h1>Rejestracja</h1>
+
+<form th:action="@{/register}" method="post" th:object="${user}">
+
+    <div>
+        <label for="username">Nazwa użytkownika:</label>
+        <input type="text" id="username" th:field="*{username}" required/>
+    </div>
+
+
+    <div>
+        <label for="password">Hasło: </label>
+        <input type="password" id="password" th:field="*{password}" required/>
+    </div>
+
+    <div>
+        <label for="isDoctor">Jestem lekarzem</label>
+        <input type="checkbox" id="isDoctor" th:field="*{isDoctor}">
+    </div>
+
+    <div>
+        <button type="submit">Zarejestruj się</button>
+    </div>
+
+</form>
+
+</body>
+</html>
