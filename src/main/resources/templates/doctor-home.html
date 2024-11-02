@@ -6,5 +6,18 @@
 </head>
 <body>
 <h1>Panel lekarza</h1>
+
+<form th:action="@{/clinic/owned}" method="get">
+    <button type="submit">Moje Kliniki</button>
+</form><br>
+
+<form th:action="@{/clinic/employed}" method="get">
+    <button type="submit">Kliniki, w których pracuję</button>
+</form><br>
+
+<form th:action="@{/clinic/add}" method="get">
+    <button type="submit">Zarejestruj klinikę</button>
+</form><br>
+
 </body>
 </html>

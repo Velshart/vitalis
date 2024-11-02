@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Nowa klinika</h1>
+
+<div>
+    <form method="post">
+        <input type="text" placeholder="Nazwa" class="input-field" th:field="*{clinic.name}" required>
+        <input type="text" placeholder="Ulica" class="input-field" th:field="*{clinic.street}" required>
+        <input type="number" placeholder="Budynek" class="number" th:field="*{clinic.buildingNumber}" required>
+        <input type="text" placeholder="Kod pocztowy" class="input-field" th:field="*{clinic.postalCode}" required>
+        <input type="text" placeholder="Miasto" class="input-field" th:field="*{clinic.city}" required>
+        <input type="number" placeholder="Telefon" class="input-field" th:field="*{clinic.phoneNumber}" required>
+
+        <label for="employees">Pracownicy:</label>
+        <select id="employees" name="employees" class="input-field" th:field="*{clinic.employees}"  multiple required style="width: 300px;">
+            <option th:each="doctor : ${doctors}" th:value="${doctor.id}"
+                    th:text="${doctor.username}"
+                    th:selected="${clinic.employees.contains(doctor)}">
+            </option>
+        </select>
+
+        <input type="submit" value="Zatwierdź">
+    </form>
+</div>
+
+</body>
+</html>

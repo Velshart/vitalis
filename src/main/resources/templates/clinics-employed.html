@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Kliniki, w których pracujesz</h2><br>
+
+<div th:each="clinic : ${clinicsEmployed}">
+    <div>
+        <div th:text="${clinic.name}"></div>
+        <a th:href="">Szczegóły</a>
+    </div>
+</div><br>
+
+</body>
+</html>

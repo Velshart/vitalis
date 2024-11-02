@@ -5,6 +5,7 @@ import me.mmtr.vitalis.data.User;
 import me.mmtr.vitalis.data.UserDTO;
 import me.mmtr.vitalis.repository.RoleRepository;
 import me.mmtr.vitalis.repository.UserRepository;
+import me.mmtr.vitalis.service.interfaces.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

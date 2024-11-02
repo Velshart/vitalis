@@ -2,7 +2,7 @@ package me.mmtr.vitalis.controller;
 
 import me.mmtr.vitalis.data.User;
 import me.mmtr.vitalis.data.UserDTO;
-import me.mmtr.vitalis.service.UserService;
+import me.mmtr.vitalis.service.interfaces.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

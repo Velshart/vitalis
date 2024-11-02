@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2>Twoje kliniki</h2><br>
+
+<div th:each="clinic : ${clinicsOwned}">
+    <div>
+        <div th:text="${clinic.name}"></div>
+        <a th:href="@{/clinic/update/{id}(id=${clinic.id})}">Szczegóły</a>
+
+        <form method="post" th:action="@{/clinic/delete}">
+            <input type="hidden" name="id" th:value="${clinic.id}">
+            <input type="submit" value="Usuń">
+        </form>
+    </div>
+</div><br>
+
+</body>
+</html>
