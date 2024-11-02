@@ -1,4 +1,4 @@
-package me.mmtr.vitalis.data.dao.interfaces;
+package me.mmtr.vitalis.repository.dao.interfaces;
 
 import me.mmtr.vitalis.data.Clinic;
 

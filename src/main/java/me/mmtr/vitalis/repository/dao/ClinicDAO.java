@@ -1,11 +1,11 @@
-package me.mmtr.vitalis.data.dao;
+package me.mmtr.vitalis.repository.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import me.mmtr.vitalis.data.Clinic;
-import me.mmtr.vitalis.data.dao.interfaces.IClinicDAO;
+import me.mmtr.vitalis.repository.dao.interfaces.IClinicDAO;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

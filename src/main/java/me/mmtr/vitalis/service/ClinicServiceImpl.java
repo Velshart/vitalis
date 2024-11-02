@@ -3,7 +3,7 @@ package me.mmtr.vitalis.service;
 import jakarta.transaction.Transactional;
 import me.mmtr.vitalis.data.Clinic;
 import me.mmtr.vitalis.data.User;
-import me.mmtr.vitalis.data.dao.interfaces.IClinicDAO;
+import me.mmtr.vitalis.repository.dao.interfaces.IClinicDAO;
 import me.mmtr.vitalis.repository.UserRepository;
 import me.mmtr.vitalis.service.interfaces.ClinicService;
 import org.springframework.stereotype.Service;
