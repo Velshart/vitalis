@@ -1,6 +1,7 @@
 package me.mmtr.vitalis.data;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,18 +29,23 @@ public class Clinic {
 
 
     @Column(nullable = false)
+    @Pattern(regexp = "[a-zA-ZąęćłńóśźżĄĘĆŁŃÓŚŹŻ ]+", message = "Nazwa ulicy składa się jedynie z liter.")
     private String street;
 
     @Column(nullable = false)
+    @Pattern(regexp = "[0-9]+")
     private String buildingNumber;
 
     @Column(nullable = false)
+    @Pattern(regexp = "\\d{2}-\\d{3}", message = "Prawidłowy format: XX-XXX.")
     private String postalCode;
 
     @Column(nullable = false)
+    @Pattern(regexp = "[a-zA-ZąęćłńóśźżĄĘĆŁŃÓŚŹŻ ]+", message = "Nazwa miasta składa się jedynie z liter.")
     private String city;
 
     @Column(nullable = false)
+    @Pattern(regexp = "\\d{9}", message = "Numer telefonu składa się z dokładnie 9 cyfr.")
     private String phoneNumber;
 
 

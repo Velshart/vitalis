@@ -1,5 +1,6 @@
 package me.mmtr.vitalis.controller;
 
+import jakarta.validation.Valid;
 import me.mmtr.vitalis.data.Clinic;
 import me.mmtr.vitalis.data.User;
 import me.mmtr.vitalis.repository.UserRepository;
@@ -7,6 +8,7 @@ import me.mmtr.vitalis.service.interfaces.ClinicService;
 import me.mmtr.vitalis.service.interfaces.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -34,7 +36,7 @@ public class ClinicController {
 
         model.addAttribute("clinicsOwned", CLINIC_SERVICE.getAll()
                 .stream()
-                .filter(clinic -> clinic.getOwner().equals(user))
+                .filter(clinic -> clinic.getOwner() != null && clinic.getOwner().equals(user))
                 .collect(Collectors.toList())
         );
         return "clinics-owned";
@@ -54,6 +56,9 @@ public class ClinicController {
 
     @GetMapping("/add")
     public String add(Model model, Principal principal) {
+        Clinic clinic = new Clinic();
+        clinic.setOwner(USER_SERVICE.findUserByUsername(principal.getName()));
+
         model.addAttribute("clinic", new Clinic());
 
         model.addAttribute("doctors", USER_REPOSITORY
@@ -67,8 +72,24 @@ public class ClinicController {
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute Clinic clinic, Principal principal) {
+    public String add(@ModelAttribute @Valid Clinic clinic,
+                      BindingResult bindingResult,
+                      Model model,
+                      Principal principal
+    ) {
         clinic.setOwner(USER_SERVICE.findUserByUsername(principal.getName()));
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("clinic", clinic);
+//            model.addAttribute("doctors", USER_REPOSITORY
+//                    .findAll()
+//                    .stream()
+//                    .filter(User::getIsDoctor)
+//                    .filter(user -> !user.getUsername().equals(principal.getName()))
+//                    .collect(Collectors.toList())
+//            );
+            return "clinic";
+        }
 
         this.CLINIC_SERVICE.saveOrUpdate(clinic);
         return "redirect:/clinic/owned";
@@ -86,7 +107,19 @@ public class ClinicController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable Long id, @ModelAttribute Clinic clinic) {
+    public String update(@PathVariable Long id,
+                         @ModelAttribute @Valid Clinic clinic,
+                         BindingResult bindingResult,
+                         Model model,
+                         Principal principal) {
+
+        clinic.setOwner(USER_SERVICE.findUserByUsername(principal.getName()));
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("clinic", clinic);
+            return "clinic";
+        }
+
         this.CLINIC_SERVICE.saveOrUpdate(clinic);
         return "redirect:/clinic/owned";
     }
