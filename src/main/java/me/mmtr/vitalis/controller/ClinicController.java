@@ -3,6 +3,7 @@ package me.mmtr.vitalis.controller;
 import jakarta.validation.Valid;
 import me.mmtr.vitalis.data.Clinic;
 import me.mmtr.vitalis.data.User;
+import me.mmtr.vitalis.data.enums.Specialization;
 import me.mmtr.vitalis.repository.UserRepository;
 import me.mmtr.vitalis.service.interfaces.ClinicService;
 import me.mmtr.vitalis.service.interfaces.UserService;
@@ -60,6 +61,7 @@ public class ClinicController {
         clinic.setOwner(USER_SERVICE.findUserByUsername(principal.getName()));
 
         model.addAttribute("clinic", new Clinic());
+        model.addAttribute("specializations", Specialization.values());
 
         model.addAttribute("doctors", USER_REPOSITORY
                 .findAll()
@@ -81,13 +83,7 @@ public class ClinicController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("clinic", clinic);
-//            model.addAttribute("doctors", USER_REPOSITORY
-//                    .findAll()
-//                    .stream()
-//                    .filter(User::getIsDoctor)
-//                    .filter(user -> !user.getUsername().equals(principal.getName()))
-//                    .collect(Collectors.toList())
-//            );
+            model.addAttribute("specializations", Specialization.values());
             return "clinic";
         }
 
@@ -103,6 +99,7 @@ public class ClinicController {
             return "redirect:/clinic/owned";
         }
         model.addAttribute("clinic", clinicOptional.get());
+        model.addAttribute("specializations", Specialization.values());
         return "clinic";
     }
 
@@ -117,6 +114,7 @@ public class ClinicController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("clinic", clinic);
+            model.addAttribute("specializations", Specialization.values());
             return "clinic";
         }
 

@@ -43,6 +43,7 @@ public class ClinicDAO implements IClinicDAO {
 
     @Override
     public void saveOrUpdate(Clinic clinic) {
+
         if (getById(clinic.getId()).isEmpty()) {
             entityManager.persist(clinic);
         } else {
