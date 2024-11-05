@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.mmtr.vitalis.data.enums.Specialization;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -56,6 +57,11 @@ public class Clinic {
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<User> employees = new HashSet<>();
+
+    @ElementCollection(targetClass = Specialization.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "clinic_specializations", joinColumns = @JoinColumn(name = "clinic_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Specialization> specializations = new HashSet<>();
 
     public void addEmployee(User user) {
         this.employees.add(user);
