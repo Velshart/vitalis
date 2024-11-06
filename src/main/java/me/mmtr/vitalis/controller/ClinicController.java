@@ -84,6 +84,7 @@ public class ClinicController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("clinic", clinic);
             model.addAttribute("specializations", Specialization.values());
+
             return "clinic";
         }
 
@@ -100,7 +101,7 @@ public class ClinicController {
         }
         model.addAttribute("clinic", clinicOptional.get());
         model.addAttribute("specializations", Specialization.values());
-        return "clinic";
+        return "clinic-view";
     }
 
     @PostMapping("/update/{id}")
@@ -115,12 +116,14 @@ public class ClinicController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("clinic", clinic);
             model.addAttribute("specializations", Specialization.values());
-            return "clinic";
+
+            return "clinic-view";
         }
 
         this.CLINIC_SERVICE.saveOrUpdate(clinic);
         return "redirect:/clinic/owned";
     }
+
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {

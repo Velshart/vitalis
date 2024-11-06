@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rejestracja kliniki</title>
+</head>
+<body>
+<h1>Twoja klinika</h1>
+
+<div>
+    <form method="post">
+
+        <div>
+            <input type="text" placeholder="Nazwa" class="input-field" th:field="*{clinic.name}" required>
+        </div>
+        <br>
+
+        <div>
+            <input type="text" placeholder="Ulica" class="input-field" th:field="*{clinic.street}" required>
+            <span th:if="${#fields.hasErrors('clinic.street')}" th:errors="*{clinic.street}"></span>
+        </div>
+        <br>
+
+        <div>
+            <input type="number" placeholder="Budynek" class="number" th:field="*{clinic.buildingNumber}" required>
+            <span th:if="${#fields.hasErrors('clinic.buildingNumber')}" th:errors="*{clinic.buildingNumber}"></span>
+        </div>
+        <br>
+
+        <div>
+            <input type="text" placeholder="Kod pocztowy" class="input-field" th:field="*{clinic.postalCode}" required>
+            <span th:if="${#fields.hasErrors('clinic.postalCode')}" th:errors="*{clinic.postalCode}"></span>
+        </div>
+        <br>
+
+        <div>
+            <input type="text" placeholder="Miasto" class="input-field" th:field="*{clinic.city}" required>
+            <span th:if="${#fields.hasErrors('clinic.city')}" th:errors="*{clinic.city}"></span>
+        </div>
+        <br>
+
+        <div>
+            <input type="number" placeholder="Telefon" class="input-field" th:field="*{clinic.phoneNumber}" required>
+            <span th:if="${#fields.hasErrors('clinic.phoneNumber')}" th:errors="*{clinic.phoneNumber}"></span>
+        </div>
+        <br>
+
+        <a th:href="@{/clinic/employees/{id}(id=${clinic.id})}">Pracownicy</a><br>
+
+        <label>Specjalizacje:</label>
+        <div th:each="specialization : ${specializations}">
+            <input type="checkbox"
+                   th:value="${specialization}"
+                   th:field="*{clinic.specializations}"
+                   th:checked="${clinic.specializations.contains(specialization)}"/>
+            <span th:text="${specialization.getName()}"></span>
+        </div><br>
+
+        <input type="submit" value="Zapisz i wyjdź">
+    </form>
+</div>
+
+</body>
+</html>
