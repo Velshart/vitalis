@@ -12,6 +12,8 @@ public interface ClinicService {
 
     void addEmployeeToClinic(Long clinicId, Long employeeId);
 
+    void removeEmployeeFromClinic(Long clinicId, Long employeeId);
+
     List<Clinic> getAll();
 
     void delete(Long id);

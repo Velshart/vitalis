@@ -35,6 +35,8 @@ public class ClinicServiceImpl implements ClinicService {
         return CLINIC_DAO.getById(id);
     }
 
+
+    //TODO: Extract method from add/remove employee to eliminate duplicate code
     @Override
     public void addEmployeeToClinic(Long clinicId, Long employeeId) {
         Clinic clinic = CLINIC_DAO.getById(clinicId).orElseThrow(() ->
@@ -47,6 +49,20 @@ public class ClinicServiceImpl implements ClinicService {
         CLINIC_DAO.saveOrUpdate(clinic);
         USER_REPOSITORY.save(user);
     }
+
+    @Override
+    public void removeEmployeeFromClinic(Long clinicId, Long employeeId) {
+        Clinic clinic = CLINIC_DAO.getById(clinicId).orElseThrow(() ->
+                new RuntimeException("Clinic not found"));
+
+        User user = USER_REPOSITORY.findById(employeeId).orElseThrow(() ->
+                new RuntimeException("User not found"));
+
+        clinic.removeEmployee(user);
+        CLINIC_DAO.saveOrUpdate(clinic);
+        USER_REPOSITORY.save(user);
+    }
+
 
     @Override
     @Transactional
