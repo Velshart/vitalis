@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import me.mmtr.vitalis.data.Clinic;
 import me.mmtr.vitalis.repository.dao.interfaces.IClinicDAO;
 import org.springframework.stereotype.Repository;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Transactional
 public class ClinicDAO implements IClinicDAO {
 
     private final String GET_ALL_JPQL = "FROM me.mmtr.vitalis.data.Clinic";

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import me.mmtr.vitalis.data.enums.Specialization;
 
@@ -49,6 +50,11 @@ public class Clinic {
     @Pattern(regexp = "\\d{9}", message = "Numer telefonu składa się z dokładnie 9 cyfr.")
     private String phoneNumber;
 
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
 
     @ManyToMany
     @JoinTable(
@@ -56,6 +62,7 @@ public class Clinic {
             joinColumns = @JoinColumn(name = "clinic_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
+    @EqualsAndHashCode.Exclude
     private Set<User> employees = new HashSet<>();
 
     @ElementCollection(targetClass = Specialization.class, fetch = FetchType.EAGER)

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -122,6 +123,66 @@ public class ClinicController {
 
         this.CLINIC_SERVICE.saveOrUpdate(clinic);
         return "redirect:/clinic/owned";
+    }
+
+    @PostMapping("/employees/add/{employeeId}/{clinicId}")
+    public String addEmployee(@PathVariable Long employeeId,
+                              @PathVariable Long clinicId,
+                              Principal principal,
+                              RedirectAttributes redirectAttributes) {
+
+        CLINIC_SERVICE.addEmployeeToClinic(clinicId, employeeId);
+
+        Clinic clinic = CLINIC_SERVICE.getById(clinicId).orElseThrow();
+
+        redirectAttributes.addFlashAttribute("employees", clinic.getEmployees());
+
+        redirectAttributes.addFlashAttribute("others", USER_REPOSITORY.findAll().stream()
+                .filter(User::getIsDoctor)
+                .filter(user -> !user.getUsername().equals(principal.getName()))
+                .filter(user -> !clinic.getEmployees().contains(user))
+                .collect(Collectors.toList()));
+
+        return "redirect:/clinic/employees/" + clinicId;
+    }
+
+    @PostMapping("/employees/remove/{employeeId}/{clinicId}")
+    public String removeEmployee(@PathVariable Long employeeId,
+                                 @PathVariable Long clinicId,
+                                 Principal principal,
+                                 RedirectAttributes redirectAttributes) {
+
+        CLINIC_SERVICE.removeEmployeeFromClinic(clinicId, employeeId);
+
+        Clinic clinic = CLINIC_SERVICE.getById(clinicId).orElseThrow();
+
+
+        redirectAttributes.addFlashAttribute("employees", clinic.getEmployees());
+
+        redirectAttributes.addFlashAttribute("others", USER_REPOSITORY.findAll().stream()
+                .filter(User::getIsDoctor)
+                .filter(user -> !user.getUsername().equals(principal.getName()))
+                .filter(user -> !clinic.getEmployees().contains(user))
+                .collect(Collectors.toList()));
+
+
+        return "redirect:/clinic/employees/" + clinic.getId();
+    }
+
+    @GetMapping("/employees/{id}")
+    public String showEmployees(@PathVariable Long id, Model model, Principal principal) {
+
+        Clinic clinic = CLINIC_SERVICE.getById(id).orElseThrow();
+
+        model.addAttribute("clinic", clinic);
+        model.addAttribute("employees", clinic.getEmployees());
+        model.addAttribute("others", USER_REPOSITORY.findAll().stream()
+                .filter(User::getIsDoctor)
+                .filter(user -> !user.getUsername().equals(principal.getName()))
+                .filter(user -> !clinic.getEmployees().contains(user))
+                .collect(Collectors.toList()));
+
+        return "clinic-employees";
     }
 
 

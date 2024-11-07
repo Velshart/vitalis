@@ -3,6 +3,7 @@ package me.mmtr.vitalis.data;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -29,6 +30,11 @@ public class User {
     @Column(nullable = false)
     private Boolean isDoctor;
 
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
@@ -36,5 +42,6 @@ public class User {
     private List<Role> roles = new ArrayList<>();
 
     @ManyToMany(mappedBy = "employees")
+    @EqualsAndHashCode.Exclude
     private Set<Clinic> clinics = new HashSet<>();
 }

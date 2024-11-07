@@ -1,10 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <title>Pracownicy Kliniki</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+
+<h3>Dodaj pracowników do kliniki</h3>
+
+<h4>Aktualni pracownicy kliniki:</h4>
+<div th:each="employee : ${employees}">
+    <div>
+        <span th:text="${employee.username}"></span>
+        <form th:action="@{/clinic/employees/remove/{employeeId}/{clinicId}(employeeId=${employee.id}, clinicId=${clinic.id})}" method="post">
+            <button type="submit">Usuń</button>
+        </form>
+    </div>
+</div><br>
+
+
+<h4>Dodaj nowych pracowników:</h4>
+<div th:each="other : ${others}">
+    <div>
+        <span th:text="${other.username}"></span>
+        <form th:action="@{/clinic/employees/add/{employeeId}/{clinicId}(employeeId=${other.id}, clinicId=${clinic.id})}" method="post">
+            <button type="submit">Dodaj</button>
+        </form>
+    </div>
+</div><br>
 
 </body>
 </html>
