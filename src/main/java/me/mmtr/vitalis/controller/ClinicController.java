@@ -186,8 +186,8 @@ public class ClinicController {
     }
 
 
-    @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    @PostMapping("/delete")
+    public String delete(@RequestParam Long id) {
         this.CLINIC_SERVICE.delete(id);
         return "redirect:/clinic/owned";
     }
