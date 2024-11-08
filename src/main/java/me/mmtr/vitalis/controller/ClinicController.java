@@ -157,6 +157,14 @@ public class ClinicController {
         return "clinic-employees";
     }
 
+    @GetMapping("/employee-view/{id}")
+    public String showEmployeeView(@PathVariable Long id, Model model) {
+        Clinic clinic = CLINIC_SERVICE.getById(id).orElseThrow();
+        model.addAttribute("clinic", clinic);
+        model.addAttribute("specializations", clinic.getSpecializations());
+
+        return "clinic-employee-view";
+    }
 
     @PostMapping("/delete")
     public String delete(@RequestParam Long id) {
@@ -176,6 +184,7 @@ public class ClinicController {
         }
         addRedirectAttributes(redirectAttributes, clinicId, principal);
     }
+
 
     private void addRedirectAttributes(RedirectAttributes redirectAttributes, Long clinicId, Principal principal) {
         Clinic clinic = CLINIC_SERVICE.getById(clinicId).orElseThrow();

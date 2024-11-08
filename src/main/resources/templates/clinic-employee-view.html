@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Szczegóły kliniki</title>
+</head>
+<body>
+<h1>Szczegóły kliniki</h1>
+
+<div>
+    <form>
+
+        <div>
+            <label>Właściciel:</label>
+            <span th:text="${clinic.getOwner().username}"></span>
+        </div>
+        <br>
+
+        <div>
+            <label>Nazwa:</label>
+            <span th:text="${clinic.name}"></span>
+        </div>
+        <br>
+
+        <div>
+            <label>Ulica:</label>
+            <span th:text="${clinic.street}"></span>
+        </div>
+        <br>
+
+        <div>
+            <label>Budynek:</label>
+            <span th:text="${clinic.buildingNumber}"></span>
+        </div>
+        <br>
+
+        <div>
+            <label>Kod pocztowy:</label>
+            <span th:text="${clinic.postalCode}"></span>
+        </div>
+        <br>
+
+        <div>
+            <label>Miasto:</label>
+            <span th:text="${clinic.city}"></span>
+        </div>
+        <br>
+
+        <div>
+            <label>Telefon:</label>
+            <span th:text="${clinic.phoneNumber}"></span>
+        </div>
+        <br>
+
+        <label>Specjalizacje:</label>
+        <div th:each="specialization : ${specializations}">
+            <span th:text="${specialization.getName()}"></span>
+        </div>
+        <br>
+
+        <a th:href="@{/clinic/employed}">Wróć</a>
+    </form>
+</div>
+
+</body>
+</html>

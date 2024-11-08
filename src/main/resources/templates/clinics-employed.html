@@ -10,7 +10,7 @@
 <div th:each="clinic : ${clinicsEmployed}">
     <div>
         <div th:text="${clinic.name}"></div>
-        <a th:href="">Szczegóły</a>
+        <a th:href="@{/clinic/employee-view/{id}(id=${clinic.id})}">Szczegóły</a>
     </div>
 </div><br>
 
