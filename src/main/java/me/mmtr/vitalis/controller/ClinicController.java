@@ -135,13 +135,7 @@ public class ClinicController {
 
         Clinic clinic = CLINIC_SERVICE.getById(clinicId).orElseThrow();
 
-        redirectAttributes.addFlashAttribute("employees", clinic.getEmployees());
-
-        redirectAttributes.addFlashAttribute("others", USER_REPOSITORY.findAll().stream()
-                .filter(User::getIsDoctor)
-                .filter(user -> !user.getUsername().equals(principal.getName()))
-                .filter(user -> !clinic.getEmployees().contains(user))
-                .collect(Collectors.toList()));
+        addRedirectAttributes(redirectAttributes, clinic, principal);
 
         return "redirect:/clinic/employees/" + clinicId;
     }
@@ -157,14 +151,7 @@ public class ClinicController {
         Clinic clinic = CLINIC_SERVICE.getById(clinicId).orElseThrow();
 
 
-        redirectAttributes.addFlashAttribute("employees", clinic.getEmployees());
-
-        redirectAttributes.addFlashAttribute("others", USER_REPOSITORY.findAll().stream()
-                .filter(User::getIsDoctor)
-                .filter(user -> !user.getUsername().equals(principal.getName()))
-                .filter(user -> !clinic.getEmployees().contains(user))
-                .collect(Collectors.toList()));
-
+        addRedirectAttributes(redirectAttributes, clinic, principal);
 
         return "redirect:/clinic/employees/" + clinic.getId();
     }
@@ -192,4 +179,13 @@ public class ClinicController {
         return "redirect:/clinic/owned";
     }
 
+    private void addRedirectAttributes(RedirectAttributes redirectAttributes, Clinic clinic, Principal principal) {
+        redirectAttributes.addFlashAttribute("employees", clinic.getEmployees());
+
+        redirectAttributes.addFlashAttribute("others", USER_REPOSITORY.findAll().stream()
+                .filter(User::getIsDoctor)
+                .filter(user -> !user.getUsername().equals(principal.getName()))
+                .filter(user -> !clinic.getEmployees().contains(user))
+                .collect(Collectors.toList()));
+    }
 }
