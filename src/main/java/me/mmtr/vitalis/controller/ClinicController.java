@@ -130,11 +130,7 @@ public class ClinicController {
                               Principal principal,
                               RedirectAttributes redirectAttributes) {
 
-        CLINIC_SERVICE.addEmployeeToClinic(clinicId, employeeId);
-
-        Clinic clinic = CLINIC_SERVICE.getById(clinicId).orElseThrow();
-
-        addRedirectAttributes(redirectAttributes, clinic, principal);
+        updateEmployeesList(clinicId, employeeId, redirectAttributes, principal, true);
 
         return "redirect:/clinic/employees/" + clinicId;
     }
@@ -145,14 +141,9 @@ public class ClinicController {
                                  Principal principal,
                                  RedirectAttributes redirectAttributes) {
 
-        CLINIC_SERVICE.removeEmployeeFromClinic(clinicId, employeeId);
+        updateEmployeesList(clinicId, employeeId, redirectAttributes, principal, false);
 
-        Clinic clinic = CLINIC_SERVICE.getById(clinicId).orElseThrow();
-
-
-        addRedirectAttributes(redirectAttributes, clinic, principal);
-
-        return "redirect:/clinic/employees/" + clinic.getId();
+        return "redirect:/clinic/employees/" + clinicId;
     }
 
     @GetMapping("/employees/{id}")
@@ -178,7 +169,18 @@ public class ClinicController {
         return "redirect:/clinic/owned";
     }
 
-    private void addRedirectAttributes(RedirectAttributes redirectAttributes, Clinic clinic, Principal principal) {
+    private void updateEmployeesList(Long clinicId, Long employeeId, RedirectAttributes redirectAttributes, Principal principal, boolean add) {
+        if(add) {
+            CLINIC_SERVICE.addEmployeeToClinic(clinicId, employeeId);
+        } else {
+            CLINIC_SERVICE.removeEmployeeFromClinic(clinicId, employeeId);
+        }
+        addRedirectAttributes(redirectAttributes, clinicId, principal);
+    }
+
+    private void addRedirectAttributes(RedirectAttributes redirectAttributes, Long clinicId, Principal principal) {
+        Clinic clinic = CLINIC_SERVICE.getById(clinicId).orElseThrow();
+
         redirectAttributes.addFlashAttribute("employees", clinic.getEmployees());
 
         redirectAttributes.addFlashAttribute("others", USER_REPOSITORY.findAll().stream()
