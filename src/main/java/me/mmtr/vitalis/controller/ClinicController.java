@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -57,11 +58,9 @@ public class ClinicController {
     }
 
     @GetMapping("/add")
-    public String add(Model model, Principal principal) {
-        Clinic clinic = new Clinic();
+    public String add(@ModelAttribute(name = "clinic") Clinic clinic, Model model, Principal principal) {
         clinic.setOwner(USER_SERVICE.findUserByUsername(principal.getName()));
 
-        model.addAttribute("clinic", new Clinic());
         model.addAttribute("specializations", Specialization.values());
 
         model.addAttribute("doctors", USER_REPOSITORY
@@ -153,11 +152,7 @@ public class ClinicController {
 
         model.addAttribute("clinic", clinic);
         model.addAttribute("employees", clinic.getEmployees());
-        model.addAttribute("others", USER_REPOSITORY.findAll().stream()
-                .filter(User::getIsDoctor)
-                .filter(user -> !user.getUsername().equals(principal.getName()))
-                .filter(user -> !clinic.getEmployees().contains(user))
-                .collect(Collectors.toList()));
+        model.addAttribute("others", getUnemployedDoctors(USER_REPOSITORY.findAll(), clinic.getId(), principal));
 
         return "clinic-employees";
     }
@@ -169,7 +164,11 @@ public class ClinicController {
         return "redirect:/clinic/owned";
     }
 
-    private void updateEmployeeList(Long clinicId, Long employeeId, RedirectAttributes redirectAttributes, Principal principal, boolean add) {
+    private void updateEmployeeList(Long clinicId,
+                                    Long employeeId,
+                                    RedirectAttributes redirectAttributes,
+                                    Principal principal,
+                                    boolean add) {
         if(add) {
             CLINIC_SERVICE.addEmployeeToClinic(clinicId, employeeId);
         } else {
@@ -183,10 +182,17 @@ public class ClinicController {
 
         redirectAttributes.addFlashAttribute("employees", clinic.getEmployees());
 
-        redirectAttributes.addFlashAttribute("others", USER_REPOSITORY.findAll().stream()
+        redirectAttributes.addFlashAttribute("others", getUnemployedDoctors(USER_REPOSITORY.findAll(),
+                clinicId, principal));
+    }
+
+    private List<User> getUnemployedDoctors(List<User> others, Long clinicId, Principal principal) {
+        Clinic clinic = CLINIC_SERVICE.getById(clinicId).orElseThrow();
+
+        return others.stream()
                 .filter(User::getIsDoctor)
                 .filter(user -> !user.getUsername().equals(principal.getName()))
                 .filter(user -> !clinic.getEmployees().contains(user))
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
     }
 }
