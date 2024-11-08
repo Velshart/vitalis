@@ -130,7 +130,7 @@ public class ClinicController {
                               Principal principal,
                               RedirectAttributes redirectAttributes) {
 
-        updateEmployeesList(clinicId, employeeId, redirectAttributes, principal, true);
+        updateEmployeeList(clinicId, employeeId, redirectAttributes, principal, true);
 
         return "redirect:/clinic/employees/" + clinicId;
     }
@@ -141,7 +141,7 @@ public class ClinicController {
                                  Principal principal,
                                  RedirectAttributes redirectAttributes) {
 
-        updateEmployeesList(clinicId, employeeId, redirectAttributes, principal, false);
+        updateEmployeeList(clinicId, employeeId, redirectAttributes, principal, false);
 
         return "redirect:/clinic/employees/" + clinicId;
     }
@@ -169,7 +169,7 @@ public class ClinicController {
         return "redirect:/clinic/owned";
     }
 
-    private void updateEmployeesList(Long clinicId, Long employeeId, RedirectAttributes redirectAttributes, Principal principal, boolean add) {
+    private void updateEmployeeList(Long clinicId, Long employeeId, RedirectAttributes redirectAttributes, Principal principal, boolean add) {
         if(add) {
             CLINIC_SERVICE.addEmployeeToClinic(clinicId, employeeId);
         } else {
