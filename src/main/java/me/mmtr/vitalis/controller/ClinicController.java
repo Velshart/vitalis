@@ -106,8 +106,7 @@ public class ClinicController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@PathVariable Long id,
-                         @ModelAttribute @Valid Clinic clinic,
+    public String update(@ModelAttribute @Valid Clinic clinic,
                          BindingResult bindingResult,
                          Model model,
                          Principal principal) {
