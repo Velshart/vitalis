@@ -24,9 +24,8 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Override
     @Transactional
-    public Clinic saveOrUpdate(Clinic clinic) {
+    public void saveOrUpdate(Clinic clinic) {
         CLINIC_DAO.saveOrUpdate(clinic);
-        return clinic;
     }
 
     @Override

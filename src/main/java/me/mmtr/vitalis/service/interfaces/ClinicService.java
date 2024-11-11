@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClinicService {
-    Clinic saveOrUpdate(Clinic clinic);
+    void saveOrUpdate(Clinic clinic);
 
     Optional<Clinic> getById(Long id);
 
