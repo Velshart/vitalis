@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wybór Kliniki</title>
+</head>
+<body>
+<h2>Wybierz klinikę</h2>
+
+<form th:action="@{/appointment/choose-clinic}" th:object="${appointment}" method="post">
+    <label for="clinicId">Klinika:</label>
+    <select id="clinicId" name="clinicId" required>
+        <option value="" disabled selected>Wybierz klinikę</option>
+        <option th:each="clinic : ${clinics}"
+                th:value="${clinic.id}"
+                th:text="${clinic.name}">Klinika</option>
+    </select>
+
+    <button type="submit">Dalej</button>
+</form>
+</body>
+</html>

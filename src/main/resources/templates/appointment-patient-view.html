@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Szczegóły wizyty</title>
+</head>
+<body>
+<h1>Twoja wizyta</h1>
+
+<div>
+    <form>
+
+        <div>
+            <label>Nazwa kliniki</label>
+            <span th:text="${appointment.clinic.name}"></span>
+        </div>
+        <br>
+
+        <div>
+            <label>Lekarz przyjmujący</label>
+            <span th:text="${appointment.doctor.username}"></span>
+        </div>
+        <br>
+
+        <div>
+            <label>Data</label>
+            <span th:text="${appointment.date}"></span>
+        </div>
+        <br>
+
+        <div>
+            <label>Godzina</label>
+            <span th:text="${appointment.time}"></span>
+        </div>
+        <br>
+
+        <div>
+            <label>Status wizyty</label>
+            <span th:text="${appointment.comment}"></span>
+        </div>
+        <br>
+
+        <div>
+            <label>Status wizyty</label>
+            <span th:text="${appointment.status}"></span>
+        </div>
+        <br>
+
+        <a th:href="@{/appointment/all}">Wróć</a>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nowa Wizyta</title>
+</head>
+<body>
+<h1>Dodaj Wizytę</h1>
+
+<div>
+    <form method="post" th:action="@{/appointment/add}"
+          th:object="${appointment}">
+
+        <input type="hidden" th:name="patientId" th:value="${patient.id}" />
+        <input type="hidden" th:name="clinicId" th:value="${clinic.id}" />
+
+        <label for="doctorId">Lekarz:</label>
+        <select id="doctorId" name="doctorId" required>
+            <option value="" disabled selected>Wybierz Lekarza</option>
+            <option th:each="doctor : ${doctors}"
+                    th:value="${doctor.id}"
+                    th:text="${doctor.username}">
+            </option>
+        </select><br>
+
+        <div>
+            <label for="date">Data:</label>
+            <input type="date" id="date" th:field="*{date}" required>
+        </div>
+        <br>
+
+        <div>
+            <label for="time">Godzina:</label>
+            <input type="time" id="time" th:field="*{time}" required>
+        </div>
+        <br>
+
+        <div>
+            <label for="comment">Komentarz:</label>
+            <input type="text" id="comment" placeholder="Komentarz" th:field="*{comment}">
+        </div>
+        <br>
+
+        <input type="submit" value="Zatwierdź">
+    </form>
+</div>
+
+</body>
+</html>

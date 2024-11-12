@@ -23,8 +23,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public void saveAppointment(Appointment appointment) {
+    public Appointment saveAppointment(Appointment appointment) {
         this.appointmentDAO.saveOrUpdate(appointment);
+        return appointment;
     }
 
     @Override

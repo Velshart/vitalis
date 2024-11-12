@@ -56,7 +56,7 @@ public class Clinic {
     }
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_clinics",
             joinColumns = @JoinColumn(name = "clinic_id"),

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Twoje wizyty</title>
+</head>
+<body>
+
+<h1>Twoje wizyty</h1>
+<div th:each="scheduledAppointment : ${scheduledAppointments}">
+    <div>
+        <div th:text="${scheduledAppointment.doctor.username}"></div>
+        <div th:text="${scheduledAppointment.clinic.name}"></div>
+        <div th:text="${scheduledAppointment.status}"></div>
+        <a th:href="@{/clinic/update/{id}(id=${scheduledAppointment.id})}">Szczegóły</a>
+
+        <form method="post" th:action="@{/appointment/delete}">
+            <input type="hidden" name="id" th:value="${appointment.id}">
+            <input type="submit" value="Odwołaj">
+        </form>
+    </div>
+</div><br>
+
+<h1>Oczekujące wizyty</h1>
+<div th:each="scheduledAppointment : ${scheduledAppointments}">
+    <div>
+        <div th:text="${scheduledAppointment.doctor.username}"></div>
+        <div th:text="${scheduledAppointment.clinic.name}"></div>
+        <div th:text="${scheduledAppointment.status}"></div>
+        <a th:href="@{/clinic/update/{id}(id=${scheduledAppointment.id})}">Szczegóły</a>
+
+        <form method="post" th:action="@{/appointment/delete}">
+            <input type="hidden" name="id" th:value="${appointment.id}">
+            <input type="submit" value="Odwołaj">
+        </form>
+    </div>
+</div><br>
+
+<h1>Pozostałe wizyty</h1>
+<div th:each="scheduledAppointment : ${scheduledAppointments}">
+    <div>
+        <div th:text="${scheduledAppointment.doctor.username}"></div>
+        <div th:text="${scheduledAppointment.clinic.name}"></div>
+        <div th:text="${scheduledAppointment.status}"></div>
+        <a th:href="@{/clinic/update/{id}(id=${scheduledAppointment.id})}">Szczegóły</a>
+    </div>
+</div><br>
+
+</body>
+</html>

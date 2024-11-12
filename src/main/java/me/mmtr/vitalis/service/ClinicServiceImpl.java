@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class ClinicServiceImpl implements ClinicService {
 
     private final IClinicDAO CLINIC_DAO;
