@@ -23,26 +23,26 @@
         <br>
 
         <div>
-            <label>Data</label>
+            <label>Data: </label>
             <span th:text="${appointment.date}"></span>
         </div>
         <br>
 
         <div>
-            <label>Godzina</label>
+            <label>Godzina: </label>
             <span th:text="${appointment.time}"></span>
         </div>
         <br>
 
         <div>
-            <label>Status wizyty</label>
+            <label>Komentarz pacjenta: </label>
             <span th:text="${appointment.comment}"></span>
         </div>
         <br>
 
         <div>
-            <label>Status wizyty</label>
-            <span th:text="${appointment.status}"></span>
+            <label>Status wizyty: </label>
+            <span th:text="${appointment.status.getStatus()}"></span>
         </div>
         <br>
 

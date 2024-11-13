@@ -11,38 +11,38 @@
     <div>
         <div th:text="${scheduledAppointment.doctor.username}"></div>
         <div th:text="${scheduledAppointment.clinic.name}"></div>
-        <div th:text="${scheduledAppointment.status}"></div>
+        <div th:text="${scheduledAppointment.status.getStatus()}"></div>
         <a th:href="@{/clinic/update/{id}(id=${scheduledAppointment.id})}">Szczegóły</a>
 
         <form method="post" th:action="@{/appointment/delete}">
-            <input type="hidden" name="id" th:value="${appointment.id}">
+            <input type="hidden" name="id" th:value="${scheduledAppointment.id}">
             <input type="submit" value="Odwołaj">
         </form>
     </div>
 </div><br>
 
 <h1>Oczekujące wizyty</h1>
-<div th:each="scheduledAppointment : ${scheduledAppointments}">
+<div th:each="pendingAppointment : ${pendingAppointments}">
     <div>
-        <div th:text="${scheduledAppointment.doctor.username}"></div>
-        <div th:text="${scheduledAppointment.clinic.name}"></div>
-        <div th:text="${scheduledAppointment.status}"></div>
-        <a th:href="@{/clinic/update/{id}(id=${scheduledAppointment.id})}">Szczegóły</a>
+        <div th:text="${pendingAppointment.doctor.username}"></div>
+        <div th:text="${pendingAppointment.clinic.name}"></div>
+        <div th:text="${pendingAppointment.status.getStatus()}"></div>
+        <a th:href="@{/appointment/patient-view/{id}(id=${pendingAppointment.id})}">Szczegóły</a>
 
         <form method="post" th:action="@{/appointment/delete}">
-            <input type="hidden" name="id" th:value="${appointment.id}">
+            <input type="hidden" name="id" th:value="${pendingAppointment.id}">
             <input type="submit" value="Odwołaj">
         </form>
     </div>
 </div><br>
 
 <h1>Pozostałe wizyty</h1>
-<div th:each="scheduledAppointment : ${scheduledAppointments}">
+<div th:each="otherAppointment : ${otherAppointments}">
     <div>
-        <div th:text="${scheduledAppointment.doctor.username}"></div>
-        <div th:text="${scheduledAppointment.clinic.name}"></div>
-        <div th:text="${scheduledAppointment.status}"></div>
-        <a th:href="@{/clinic/update/{id}(id=${scheduledAppointment.id})}">Szczegóły</a>
+        <div th:text="${otherAppointment.doctor.username}"></div>
+        <div th:text="${otherAppointment.clinic.name}"></div>
+        <div th:text="${otherAppointment.status.getStatus()}"></div>
+        <a th:href="@{/clinic/update/{id}(id=${otherAppointment.id})}">Szczegóły</a>
     </div>
 </div><br>
 
