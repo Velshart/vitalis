@@ -123,9 +123,9 @@ public class ClinicController {
         return "redirect:/clinic/owned";
     }
 
-    @PostMapping("/employees/add/{employeeId}/{clinicId}")
+    @PostMapping("/employees/add/{employeeId}")
     public String addEmployee(@PathVariable Long employeeId,
-                              @PathVariable Long clinicId,
+                              @RequestParam Long clinicId,
                               Principal principal,
                               RedirectAttributes redirectAttributes) {
 
@@ -134,9 +134,9 @@ public class ClinicController {
         return "redirect:/clinic/employees/" + clinicId;
     }
 
-    @PostMapping("/employees/remove/{employeeId}/{clinicId}")
+    @PostMapping("/employees/remove/{employeeId}")
     public String removeEmployee(@PathVariable Long employeeId,
-                                 @PathVariable Long clinicId,
+                                 @RequestParam Long clinicId,
                                  Principal principal,
                                  RedirectAttributes redirectAttributes) {
 
