@@ -105,8 +105,8 @@ public class AppointmentController {
 
         List<User> doctors = userRepository.findAll().stream()
                 .filter(User::getIsDoctor)
-                .filter(user -> appointment.getClinic().getEmployees().contains(user) ||
-                        appointment.getClinic().getOwner().equals(user))
+                .filter(user -> appointment.getClinic() != null && (appointment.getClinic().getEmployees().contains(user) ||
+                        appointment.getClinic().getOwner().equals(user)))
                 .toList();
 
         model.addAttribute("appointment", appointment);
