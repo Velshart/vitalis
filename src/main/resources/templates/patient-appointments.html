@@ -6,13 +6,16 @@
 </head>
 <body>
 
-<h1>Twoje wizyty</h1>
+<h1>Zatwierdzone wizyty</h1>
 <div th:each="scheduledAppointment : ${scheduledAppointments}">
     <div>
         <div th:text="${scheduledAppointment.doctor.username}"></div>
         <div th:text="${scheduledAppointment.clinic.name}"></div>
-        <div th:text="${scheduledAppointment.status.getStatus()}"></div>
-        <a th:href="@{/clinic/update/{id}(id=${scheduledAppointment.id})}">Szczegóły</a>
+        <div th:text="${scheduledAppointment.date + ' godz. ' + scheduledAppointment.time}"></div>
+        <div th:text="${'Status: ' + scheduledAppointment.status.getStatus()}"></div>
+        <div th:if="${scheduledAppointment.reasonForChange}" th:text="${'Komentarz lekarza: ' + scheduledAppointment.reasonForChange}"></div>
+        <br>
+        <a th:href="@{/appointment/patient-view/{id}(id=${scheduledAppointment.id})}">Szczegóły</a>
 
         <form method="post" th:action="@{/appointment/delete}">
             <input type="hidden" name="id" th:value="${scheduledAppointment.id}">
@@ -26,7 +29,8 @@
     <div>
         <div th:text="${pendingAppointment.doctor.username}"></div>
         <div th:text="${pendingAppointment.clinic.name}"></div>
-        <div th:text="${pendingAppointment.status.getStatus()}"></div>
+        <div th:text="${pendingAppointment.date + ' godz. ' + pendingAppointment.time}"></div>
+        <div th:text="${'Status: ' + pendingAppointment.status.getStatus()}"></div>
         <a th:href="@{/appointment/patient-view/{id}(id=${pendingAppointment.id})}">Szczegóły</a>
 
         <form method="post" th:action="@{/appointment/delete}">
@@ -41,8 +45,13 @@
     <div>
         <div th:text="${otherAppointment.doctor.username}"></div>
         <div th:text="${otherAppointment.clinic.name}"></div>
-        <div th:text="${otherAppointment.status.getStatus()}"></div>
-        <a th:href="@{/clinic/update/{id}(id=${otherAppointment.id})}">Szczegóły</a>
+        <div th:text="${'Status: ' + otherAppointment.status.getStatus()}"></div>
+        <div th:text="${'Powód: ' + otherAppointment.reasonForChange}"></div>
+
+        <form method="post" th:action="@{/appointment/delete}">
+            <input type="hidden" name="id" th:value="${otherAppointment.id}">
+            <input type="submit" value="Usuń">
+        </form>
     </div>
 </div><br>
 

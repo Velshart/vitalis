@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wizyty oczekujące na zatwierdzenie</title>
+</head>
+<body>
+<h1>Oczekujące wizyty</h1>
+<div th:each="pendingAppointment : ${pendingAppointments}">
+    <div>
+        <div th:text="${pendingAppointment.clinic.name}"></div>
+        <div th:text="${pendingAppointment.status.getStatus()}"></div>
+        <a th:href="@{/doctor/appointment-doctor-view/{id}(id=${pendingAppointment.id})}">Zmień status</a>
+    </div>
+</div>
+
+</body>
+</html>

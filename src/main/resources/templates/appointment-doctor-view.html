@@ -5,20 +5,13 @@
     <title>Szczegóły wizyty</title>
 </head>
 <body>
-<h1>Twoja wizyta</h1>
 
 <div>
-    <form>
+    <form th:action="@{/doctor/appointment-doctor-view/{id}(id=${appointment.id})}" method="post">
 
         <div>
             <label>Nazwa kliniki: </label>
             <span th:text="${appointment.clinic.name}"></span>
-        </div>
-        <br>
-
-        <div>
-            <label>Lekarz przyjmujący: </label>
-            <span th:text="${appointment.doctor.username}"></span>
         </div>
         <br>
 
@@ -46,14 +39,22 @@
         </div>
         <br>
 
-        <div>
-            <label>Komentarz lekarza: </label>
-            <span th:text="${appointment.reasonForChange}"></span>
-        </div>
-        <br>
+        <label for="appointmentStatus">Status:</label>
+        <select id="appointmentStatus" name="appointmentStatus" required>
+            <option value="" disabled selected>Zmień status</option>
+            <option th:each="status : ${statuses}"
+                    th:value="${status.name()}"
+                    th:text="${status.getStatus()}">Status</option>
+        </select><br>
 
-        <a th:href="@{/appointment/all}">Wróć</a>
-    </form>
+        <label for="reasonForChange">(Opcjonalnie) Komentarz do zmiany statusu: </label>
+        <input id="reasonForChange" type="text" name="reasonForChange"><br>
+
+        <button type="submit">Zatwierdź</button>
+
+    </form><br>
+
+    <a th:href="@{/doctor/home}">Wróć</a>
 </div>
 
 </body>

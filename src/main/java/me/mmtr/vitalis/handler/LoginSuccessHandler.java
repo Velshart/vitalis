@@ -16,9 +16,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
         if (roles.contains("DOCTOR")) {
-            response.sendRedirect("/doctor");
+            response.sendRedirect("/doctor/home");
         } else {
-            response.sendRedirect("/patient");
+            response.sendRedirect("/patient/home");
         }
     }
 }

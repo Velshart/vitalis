@@ -41,8 +41,8 @@ public class Appointment {
     @Column(length = 100)
     private String comment;
 
-    //@Column(length = 100)
-    //private String reasonForRejection;
+    @Column(length = 100)
+    private String reasonForChange;
 
     @Enumerated(EnumType.STRING)
     private AppointmentStatus status = AppointmentStatus.PENDING;

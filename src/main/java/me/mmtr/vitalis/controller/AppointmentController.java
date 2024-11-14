@@ -7,7 +7,6 @@ import me.mmtr.vitalis.data.enums.AppointmentStatus;
 import me.mmtr.vitalis.repository.UserRepository;
 import me.mmtr.vitalis.service.interfaces.AppointmentService;
 import me.mmtr.vitalis.service.interfaces.ClinicService;
-import me.mmtr.vitalis.service.interfaces.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +22,12 @@ import java.util.Optional;
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
-    private final UserService userService;
     private final UserRepository userRepository;
     private final ClinicService clinicService;
 
     public AppointmentController(AppointmentService appointmentService,
-                                 UserService userService, UserRepository userRepository, ClinicService clinicService) {
+                                 UserRepository userRepository, ClinicService clinicService) {
         this.appointmentService = appointmentService;
-        this.userService = userService;
         this.userRepository = userRepository;
         this.clinicService = clinicService;
     }
@@ -137,7 +134,7 @@ public class AppointmentController {
         appointment.setClinic(clinic);
 
         appointmentService.saveAppointment(appointment);
-        return "redirect:/patient";
+        return "redirect:/patient/home";
     }
 
     @GetMapping("/update/{id}")
@@ -153,13 +150,13 @@ public class AppointmentController {
     @PostMapping("/update/{id}")
     public String update(@PathVariable Long id, @ModelAttribute Appointment appointment) {
         appointmentService.saveAppointment(appointment);
-        return "redirect:/patient-home";
+        return "redirect:/patient/home";
     }
 
 
     @PostMapping("/delete")
     public String delete(@RequestParam Long id) {
         appointmentService.delete(id);
-        return "redirect:/patient-home";
+        return "redirect:/appointment/all";
     }
 }
