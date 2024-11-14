@@ -33,16 +33,6 @@ public class AuthenticationController {
         return "login";
     }
 
-    @GetMapping("/patient")
-    public String patient() {
-        return "patient-home";
-    }
-
-    @GetMapping("/doctor")
-    public String doctor() {
-        return "doctor-home";
-    }
-
     @GetMapping("/register")
     public String registrationForm(Model model) {
         UserDTO userDTO = new UserDTO();
