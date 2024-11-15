@@ -19,7 +19,8 @@ public class SpringSecurity {
         http.authorizeHttpRequests((authorizeRequests) -> {
                     authorizeRequests.requestMatchers("/register").permitAll()
                             .requestMatchers("/login").permitAll()
-                            .requestMatchers("/admin").hasAuthority("DOCTOR")
+                            .requestMatchers("/clinic/**").hasAuthority("DOCTOR")
+                            .requestMatchers("/doctor/**").hasAuthority("DOCTOR")
                             .anyRequest().authenticated();
 
                 }).formLogin(formLogin -> formLogin.loginPage("/login")

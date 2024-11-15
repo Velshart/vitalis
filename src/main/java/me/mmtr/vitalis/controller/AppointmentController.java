@@ -3,7 +3,6 @@ package me.mmtr.vitalis.controller;
 import me.mmtr.vitalis.data.Appointment;
 import me.mmtr.vitalis.data.Clinic;
 import me.mmtr.vitalis.data.User;
-import me.mmtr.vitalis.data.enums.AppointmentStatus;
 import me.mmtr.vitalis.repository.UserRepository;
 import me.mmtr.vitalis.service.interfaces.AppointmentService;
 import me.mmtr.vitalis.service.interfaces.ClinicService;
@@ -14,7 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -30,25 +28,6 @@ public class AppointmentController {
         this.appointmentService = appointmentService;
         this.userRepository = userRepository;
         this.clinicService = clinicService;
-    }
-
-    @GetMapping("/all")
-    public String all(Model model, Principal principal) {
-        User patient = userRepository.findByUsername(principal.getName());
-
-        model.addAttribute("scheduledAppointments", getAllAppointments(patient, AppointmentStatus.SCHEDULED));
-
-        model.addAttribute("pendingAppointments", getAllAppointments(patient, AppointmentStatus.PENDING));
-
-        List<Appointment> otherAppointments = appointmentService.getAll().stream()
-                .filter(appointment -> Objects.equals(appointment.getPatient().getId(), patient.getId()))
-                .filter(appointment -> !appointment.getStatus().equals(AppointmentStatus.PENDING) &&
-                        !appointment.getStatus().equals(AppointmentStatus.SCHEDULED))
-                .toList();
-
-        model.addAttribute("otherAppointments", otherAppointments);
-
-        return "patient-appointments";
     }
 
     @GetMapping("/choose-clinic")
@@ -75,14 +54,6 @@ public class AppointmentController {
 
         redirectAttributes.addFlashAttribute("appointment", appointment);
         return "redirect:/appointment/add";
-    }
-
-    @GetMapping("/patient-view/{id}")
-    public String showPatientView(@PathVariable Long id, Model model) {
-        Appointment appointment = appointmentService.findById(id).orElseThrow();
-        model.addAttribute("appointment", appointment);
-
-        return "appointment-patient-view";
     }
 
     @GetMapping("/add")
@@ -142,12 +113,5 @@ public class AppointmentController {
     public String delete(@RequestParam Long id) {
         appointmentService.delete(id);
         return "redirect:/appointment/all";
-    }
-
-    private List<Appointment> getAllAppointments(User patient, AppointmentStatus status) {
-        return appointmentService.getAll().stream()
-                .filter(appointment -> Objects.equals(appointment.getPatient().getId(), patient.getId()))
-                .filter(appointment -> appointment.getStatus().equals(status))
-                .toList();
     }
 }

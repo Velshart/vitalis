@@ -13,16 +13,18 @@
         <div th:text="${scheduledAppointment.clinic.name}"></div>
         <div th:text="${scheduledAppointment.date + ' godz. ' + scheduledAppointment.time}"></div>
         <div th:text="${'Status: ' + scheduledAppointment.status.getStatus()}"></div>
-        <div th:if="${scheduledAppointment.reasonForChange}" th:text="${'Komentarz lekarza: ' + scheduledAppointment.reasonForChange}"></div>
+        <div th:if="${scheduledAppointment.reasonForChange}"
+             th:text="${'Komentarz lekarza: ' + scheduledAppointment.reasonForChange}"></div>
         <br>
-        <a th:href="@{/appointment/patient-view/{id}(id=${scheduledAppointment.id})}">Szczegóły</a>
+        <a th:href="@{/patient/appointment-patient-view/{id}(id=${scheduledAppointment.id})}">Szczegóły</a>
 
         <form method="post" th:action="@{/appointment/delete}">
             <input type="hidden" name="id" th:value="${scheduledAppointment.id}">
             <input type="submit" value="Odwołaj">
         </form>
     </div>
-</div><br>
+</div>
+<br>
 
 <h1>Oczekujące wizyty</h1>
 <div th:each="pendingAppointment : ${pendingAppointments}">
@@ -31,14 +33,15 @@
         <div th:text="${pendingAppointment.clinic.name}"></div>
         <div th:text="${pendingAppointment.date + ' godz. ' + pendingAppointment.time}"></div>
         <div th:text="${'Status: ' + pendingAppointment.status.getStatus()}"></div>
-        <a th:href="@{/appointment/patient-view/{id}(id=${pendingAppointment.id})}">Szczegóły</a>
+        <a th:href="@{/patient/appointment-patient-view/{id}(id=${pendingAppointment.id})}">Szczegóły</a>
 
         <form method="post" th:action="@{/appointment/delete}">
             <input type="hidden" name="id" th:value="${pendingAppointment.id}">
             <input type="submit" value="Odwołaj">
         </form>
     </div>
-</div><br>
+</div>
+<br>
 
 <h1>Pozostałe wizyty</h1>
 <div th:each="otherAppointment : ${otherAppointments}">
@@ -53,7 +56,12 @@
             <input type="submit" value="Usuń">
         </form>
     </div>
-</div><br>
+</div>
+<br>
+
+<form th:action="@{/patient/home}" method="get">
+    <button type="submit">Wróć</button>
+</form>
 
 </body>
 </html>

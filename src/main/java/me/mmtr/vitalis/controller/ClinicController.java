@@ -33,30 +33,6 @@ public class ClinicController {
         this.USER_REPOSITORY = USER_REPOSITORY;
     }
 
-    @GetMapping("/owned")
-    public String ownedClinics(Model model, Principal principal) {
-        User user = USER_SERVICE.findUserByUsername(principal.getName());
-
-        model.addAttribute("clinicsOwned", CLINIC_SERVICE.getAll()
-                .stream()
-                .filter(clinic -> clinic.getOwner() != null && clinic.getOwner().equals(user))
-                .collect(Collectors.toList())
-        );
-        return "clinics-owned";
-    }
-
-    @GetMapping("/employed")
-    public String employedClinics(Model model, Principal principal) {
-        User user = USER_SERVICE.findUserByUsername(principal.getName());
-
-        model.addAttribute("clinicsEmployed", CLINIC_SERVICE.getAll()
-                .stream()
-                .filter(clinic -> clinic.getEmployees().contains(user))
-                .collect(Collectors.toList())
-        );
-        return "clinics-employed";
-    }
-
     @GetMapping("/add")
     public String add(@ModelAttribute(name = "clinic") Clinic clinic, Model model, Principal principal) {
         clinic.setOwner(USER_SERVICE.findUserByUsername(principal.getName()));
@@ -89,7 +65,7 @@ public class ClinicController {
         }
 
         this.CLINIC_SERVICE.saveOrUpdate(clinic);
-        return "redirect:/clinic/owned";
+        return "redirect:/doctor/owned-clinics";
     }
 
     @GetMapping("/update/{id}")
@@ -97,11 +73,11 @@ public class ClinicController {
         Optional<Clinic> clinicOptional = CLINIC_SERVICE.getById(id);
 
         if (clinicOptional.isEmpty()) {
-            return "redirect:/clinic/owned";
+            return "redirect:/doctor/owned-clinics";
         }
         model.addAttribute("clinic", clinicOptional.get());
         model.addAttribute("specializations", Specialization.values());
-        return "clinic-view";
+        return "clinic-doctor-view";
     }
 
     @PostMapping("/update/{id}")
@@ -116,11 +92,11 @@ public class ClinicController {
             model.addAttribute("clinic", clinic);
             model.addAttribute("specializations", Specialization.values());
 
-            return "clinic-view";
+            return "clinic-doctor-view";
         }
 
         this.CLINIC_SERVICE.saveOrUpdate(clinic);
-        return "redirect:/clinic/owned";
+        return "redirect:/doctor/owned-clinics";
     }
 
     @PostMapping("/employees/add/{employeeId}")
@@ -157,19 +133,10 @@ public class ClinicController {
         return "clinic-employees";
     }
 
-    @GetMapping("/employee-view/{id}")
-    public String showEmployeeView(@PathVariable Long id, Model model) {
-        Clinic clinic = CLINIC_SERVICE.getById(id).orElseThrow();
-        model.addAttribute("clinic", clinic);
-        model.addAttribute("specializations", clinic.getSpecializations());
-
-        return "clinic-employee-view";
-    }
-
     @PostMapping("/delete")
     public String delete(@RequestParam Long id) {
         this.CLINIC_SERVICE.delete(id);
-        return "redirect:/clinic/owned";
+        return "redirect:/doctor/owned-clinics";
     }
 
     private void updateEmployeeList(Long clinicId,
@@ -177,7 +144,7 @@ public class ClinicController {
                                     RedirectAttributes redirectAttributes,
                                     Principal principal,
                                     boolean add) {
-        if(add) {
+        if (add) {
             CLINIC_SERVICE.addEmployeeToClinic(clinicId, employeeId);
         } else {
             CLINIC_SERVICE.removeEmployeeFromClinic(clinicId, employeeId);

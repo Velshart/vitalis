@@ -13,6 +13,11 @@
         <a th:href="@{/doctor/appointment-doctor-view/{id}(id=${pendingAppointment.id})}">Zmień status</a>
     </div>
 </div>
+<br>
+
+<form th:action="@{/doctor/home}" method="get">
+    <button type="submit">Wróć</button>
+</form>
 
 </body>
 </html>

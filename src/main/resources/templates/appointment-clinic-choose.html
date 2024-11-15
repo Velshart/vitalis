@@ -13,10 +13,16 @@
         <option value="" disabled selected>Wybierz klinikę</option>
         <option th:each="clinic : ${clinics}"
                 th:value="${clinic.id}"
-                th:text="${clinic.name}">Klinika</option>
+                th:text="${clinic.name}">Klinika
+        </option>
     </select>
 
     <button type="submit">Dalej</button>
 </form>
+
+<form th:action="@{/patient/home}" method="get">
+    <button type="submit">Wróć</button>
+</form>
+
 </body>
 </html>

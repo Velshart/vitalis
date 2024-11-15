@@ -11,8 +11,8 @@
     <form method="post" th:action="@{/appointment/add}"
           th:object="${appointment}">
 
-        <input type="hidden" th:name="patientId" th:value="${patient.id}" />
-        <input type="hidden" th:name="clinicId" th:value="${clinic.id}" />
+        <input type="hidden" th:name="patientId" th:value="${patient.id}"/>
+        <input type="hidden" th:name="clinicId" th:value="${clinic.id}"/>
 
         <label for="doctorId">Lekarz:</label>
         <select id="doctorId" name="doctorId" required>
@@ -43,7 +43,12 @@
 
         <input type="submit" value="Zatwierdź">
     </form>
+
+    <form th:action="@{/patient/home}" method="get">
+        <button type="submit">Anuluj</button>
+    </form>
 </div>
+<br>
 
 </body>
 </html>

@@ -18,7 +18,8 @@
             <button type="submit">Usuń</button>
         </form>
     </div>
-</div><br>
+</div>
+<br>
 
 
 <h4>Dodaj nowych pracowników:</h4>
@@ -30,7 +31,12 @@
             <button type="submit">Dodaj</button>
         </form>
     </div>
-</div><br>
+</div>
+<br>
+
+<form th:action="@{/doctor/home}" method="get">
+    <button type="submit">Wróć</button>
+</form>
 
 </body>
 </html>

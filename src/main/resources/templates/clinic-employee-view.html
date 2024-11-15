@@ -57,8 +57,11 @@
             <span th:text="${specialization.getName()}"></span>
         </div>
         <br>
+    </form>
 
-        <a th:href="@{/clinic/employed}">Wróć</a>
+
+    <form th:action="@{/doctor/clinics-employed}" method="get">
+        <button type="submit">Wróć</button>
     </form>
 </div>
 

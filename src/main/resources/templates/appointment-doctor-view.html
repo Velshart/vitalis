@@ -44,7 +44,8 @@
             <option value="" disabled selected>Zmień status</option>
             <option th:each="status : ${statuses}"
                     th:value="${status.name()}"
-                    th:text="${status.getStatus()}">Status</option>
+                    th:text="${status.getStatus()}">Status
+            </option>
         </select><br>
 
         <label for="reasonForChange">(Opcjonalnie) Komentarz do zmiany statusu: </label>
@@ -52,9 +53,12 @@
 
         <button type="submit">Zatwierdź</button>
 
-    </form><br>
+    </form>
+    <br>
 
-    <a th:href="@{/doctor/home}">Wróć</a>
+    <form th:action="@{/doctor/home}" method="get">
+        <button type="submit">Wróć</button>
+    </form>
 </div>
 
 </body>

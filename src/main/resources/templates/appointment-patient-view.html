@@ -51,8 +51,10 @@
             <span th:text="${appointment.reasonForChange}"></span>
         </div>
         <br>
+    </form>
 
-        <a th:href="@{/appointment/all}">Wróć</a>
+    <form th:action="@{/patient/home}" method="get">
+        <button type="submit">Wróć</button>
     </form>
 </div>
 
