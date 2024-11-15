@@ -36,19 +36,9 @@ public class AppointmentController {
     public String all(Model model, Principal principal) {
         User patient = userRepository.findByUsername(principal.getName());
 
-        List<Appointment> scheduledAppointments = appointmentService.getAll().stream()
-                .filter(appointment -> Objects.equals(appointment.getPatient().getId(), patient.getId()))
-                .filter(appointment -> appointment.getStatus().equals(AppointmentStatus.SCHEDULED))
-                .toList();
+        model.addAttribute("scheduledAppointments", getAllAppointments(patient, AppointmentStatus.SCHEDULED));
 
-        model.addAttribute("scheduledAppointments", scheduledAppointments);
-
-        List<Appointment> pendingAppointments = appointmentService.getAll().stream()
-                .filter(appointment -> Objects.equals(appointment.getPatient().getId(), patient.getId()))
-                .filter(appointment -> appointment.getStatus().equals(AppointmentStatus.PENDING))
-                .toList();
-
-        model.addAttribute("pendingAppointments", pendingAppointments);
+        model.addAttribute("pendingAppointments", getAllAppointments(patient, AppointmentStatus.PENDING));
 
         List<Appointment> otherAppointments = appointmentService.getAll().stream()
                 .filter(appointment -> Objects.equals(appointment.getPatient().getId(), patient.getId()))
@@ -158,5 +148,12 @@ public class AppointmentController {
     public String delete(@RequestParam Long id) {
         appointmentService.delete(id);
         return "redirect:/appointment/all";
+    }
+
+    private List<Appointment> getAllAppointments(User patient, AppointmentStatus status) {
+        return appointmentService.getAll().stream()
+                .filter(appointment -> Objects.equals(appointment.getPatient().getId(), patient.getId()))
+                .filter(appointment -> appointment.getStatus().equals(status))
+                .toList();
     }
 }
