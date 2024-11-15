@@ -90,9 +90,6 @@ public class AppointmentController {
 
         Appointment appointment = (Appointment) model.asMap().get("appointment");
 
-        User patient = (User) model.asMap().get("patient");
-        Clinic clinic = (Clinic) model.asMap().get("clinic");
-
         List<User> doctors = userRepository.findAll().stream()
                 .filter(User::getIsDoctor)
                 .filter(user -> appointment.getClinic() != null && (appointment.getClinic().getEmployees().contains(user) ||
@@ -101,9 +98,6 @@ public class AppointmentController {
 
         model.addAttribute("appointment", appointment);
         model.addAttribute("doctors", doctors);
-
-        model.addAttribute("patient", patient);
-        model.addAttribute("clinic", clinic);
 
         return "appointment";
     }
