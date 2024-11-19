@@ -35,8 +35,6 @@ public class ClinicServiceImpl implements ClinicService {
         return CLINIC_DAO.getById(id);
     }
 
-
-    //TODO: Extract method from add/remove employee to eliminate duplicate code
     @Override
     public void addEmployeeToClinic(Long clinicId, Long employeeId) {
         Clinic clinic = CLINIC_DAO.getById(clinicId).orElseThrow(() ->
