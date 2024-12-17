@@ -34,11 +34,9 @@
         <div th:text="${pendingAppointment.date + ' godz. ' + pendingAppointment.time}"></div>
         <div th:text="${'Status: ' + pendingAppointment.status.getStatus()}"></div>
         <a th:href="@{/patient/appointment-patient-view/{id}(id=${pendingAppointment.id})}">Szczegóły</a>
-
-        <form method="post" th:action="@{/appointment/delete}">
-            <input type="hidden" name="id" th:value="${pendingAppointment.id}">
-            <input type="submit" value="Odwołaj">
-        </form>
+        <div>
+            <a th:href="@{/appointment/confirm-delete/{appointmentId}(appointmentId=${pendingAppointment.id})}">Odwołaj</a>
+        </div>
     </div>
 </div>
 <br>

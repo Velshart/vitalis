@@ -25,7 +25,7 @@
 
         <div>
             <label for="date">Data:</label>
-            <input type="date" id="date" th:field="*{date}" required>
+            <input type="date" id="date" th:field="*{date}" required th:min="${currentDate}">
         </div>
         <br>
 
