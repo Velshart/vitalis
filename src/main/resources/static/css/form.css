@@ -1,0 +1,50 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    width: 100%;
+    max-width: 600px;
+}
+
+#logowanie, div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #0c3761;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0d4276;
+}
+input[type="checkbox"] {
+    transform: scale(1.5); /* Increase the size of the checkbox */
+    margin-left: 10px; /* Add some space between the label and checkbox */
+}
+.checkbox-container {
+    display: flex;
+    align-items: center; /* Center vertically */
+}
