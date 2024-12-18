@@ -31,11 +31,14 @@ public class AppointmentExpirationScheduler {
                 .filter(appointment -> appointment.getDate().isBefore(today))
                 .toList();
 
-        appointmentsToExpire.forEach(appointment -> appointment.setStatus(AppointmentStatus.EXPIRED));
+        if(!appointmentsToExpire.isEmpty()) {
 
-        appointmentsToExpire.forEach(appointment -> appointment
-                .setReasonForChange("Lekarz przyjmujący nie dokonał zmiany statusu wizyty."));
+            appointmentsToExpire.forEach(appointment -> appointment.setStatus(AppointmentStatus.EXPIRED));
 
-        appointmentsToExpire.forEach(appointmentDAO::saveOrUpdate);
+            appointmentsToExpire.forEach(appointment -> appointment
+                    .setReasonForChange("Lekarz przyjmujący nie dokonał zmiany statusu wizyty."));
+
+            appointmentsToExpire.forEach(appointmentDAO::saveOrUpdate);
+        }
     }
 }
