@@ -1,10 +1,11 @@
-package me.mmtr.vitalis.service.interfaces;
+package me.mmtr.vitalis.service;
 
 import jakarta.transaction.Transactional;
 import me.mmtr.vitalis.data.Appointment;
 import me.mmtr.vitalis.data.enums.AppointmentStatus;
 import me.mmtr.vitalis.repository.UserRepository;
 import me.mmtr.vitalis.repository.dao.interfaces.IAppointmentDAO;
+import me.mmtr.vitalis.service.interfaces.AppointmentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

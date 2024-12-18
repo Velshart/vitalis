@@ -7,7 +7,8 @@ public enum AppointmentStatus {
     PENDING("Oczek. na zatwierdzenie"),
     SCHEDULED("Zatwierdzona"),
     REJECTED("Odrzucona"),
-    COMPLETED("Zakończona");
+    COMPLETED("Zakończona"),
+    EXPIRED("Przedawniona");
 
     private final String status;
 
