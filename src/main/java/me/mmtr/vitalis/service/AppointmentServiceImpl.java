@@ -7,6 +7,8 @@ import me.mmtr.vitalis.repository.dao.interfaces.IAppointmentDAO;
 import me.mmtr.vitalis.service.interfaces.AppointmentService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +26,11 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Appointment saveAppointment(Appointment appointment) {
         this.appointmentDAO.saveOrUpdate(appointment);
         return appointment;
+    }
+
+    @Override
+    public boolean existsByDoctorAndDateAndTime(Long doctorId, LocalDate date, LocalTime time) {
+        return appointmentDAO.existsByDoctorAndDateAndTime(doctorId, date, time);
     }
 
     @Override

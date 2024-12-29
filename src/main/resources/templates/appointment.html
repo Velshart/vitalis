@@ -3,35 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Nowa Wizyta</title>
+    <script>
+        async function checkAppointmentExists() {
+            const doctorId = document.getElementById('doctorId').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+
+            if (!doctorId || !date || !time) {
+                return true;
+            }
+
+            const response = await fetch(`/appointment/exists?doctorId=${doctorId}&date=${date}&time=${time}`);
+            const exists = await response.json();
+
+            if (exists) {
+                document.getElementById('error').innerText = 'Wizyta na tę datę i godzinę do tego lekarza już istnieje.';
+                return false; // Prevent form submission
+            }
+
+            document.getElementById('error').innerText = '';
+            return true;
+        }
+
+        async function validateForm(event) {
+            const isValid = await checkAppointmentExists();
+            if (!isValid) {
+                event.preventDefault();
+            }
+        }
+    </script>
 </head>
 <body>
 <h1>Dodaj Wizytę</h1>
 
 <div>
-    <form method="post" th:action="@{/appointment/add}"
-          th:object="${appointment}">
+    <form method="post" th:action="@{/appointment/add}" th:object="${appointment}" onsubmit="validateForm(event)">
 
         <input type="hidden" th:name="patientId" th:value="${patient.id}"/>
         <input type="hidden" th:name="clinicId" th:value="${clinic.id}"/>
 
         <label for="doctorId">Lekarz:</label>
-        <select id="doctorId" name="doctorId" required>
+        <select id="doctorId" name="doctorId" required onchange="checkAppointmentExists()">
             <option value="" disabled selected>Wybierz Lekarza</option>
-            <option th:each="doctor : ${doctors}"
-                    th:value="${doctor.id}"
-                    th:text="${doctor.username}">
-            </option>
+            <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.username}"></option>
         </select><br>
 
         <div>
             <label for="date">Data:</label>
-            <input type="date" id="date" th:field="*{date}" required th:min="${currentDate}">
+            <input type="date" id="date" th:field="*{date}" required th:min="${currentDate}" onchange="checkAppointmentExists()">
         </div>
         <br>
 
         <div>
             <label for="time">Godzina:</label>
-            <input type="time" id="time" th:field="*{time}" required>
+            <input type="time" id="time" th:field="*{time}" required onchange="checkAppointmentExists()">
         </div>
         <br>
 
@@ -49,6 +74,8 @@
     </form>
 </div>
 <br>
+
+<div id="error" style="color: red;"></div>
 
 </body>
 </html>

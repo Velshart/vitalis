@@ -8,12 +8,12 @@
 <h1>Czy na pewno chcesz usunąć wizytę?</h1>
 
 <form method="post" th:action="@{/appointment/delete}">
-  <input type="hidden" name="id" th:value="${appointmentId}">
-  <button type="submit">Tak</button>
+    <input type="hidden" name="id" th:value="${appointmentId}">
+    <button type="submit">Tak</button>
 </form>
 
 <form th:action="@{/patient/all-appointments}" method="get">
-  <button type="submit">Nie</button>
+    <button type="submit">Nie</button>
 </form>
 
 </body>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Delete Clinic Employee Confirmation</title>
+</head>
+<body>
+<h1>Czy na pewno chcesz usunąć pracownika z kliniki?</h1>
+
+<form method="post" th:action="@{/clinic/employees/remove/{employeeId}(employeeId=${employeeId})}">
+  <input type="hidden" name="clinicId" th:value="${clinicId}">
+  <button type="submit">Tak</button>
+</form>
+<br>
+<form th:action="@{/clinic/employees/{clinicId}(clinicId=${clinicId})}" method="get">
+  <button type="submit">Nie</button>
+</form>
+
+</body>
+</html>
