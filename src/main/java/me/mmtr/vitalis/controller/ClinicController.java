@@ -109,7 +109,12 @@ public class ClinicController {
 
         return "redirect:/clinic/employees/" + clinicId;
     }
-
+    @GetMapping("/employee/confirm-remove")
+    public String confirmDeleteEmployee(@RequestParam Long employeeId, @RequestParam Long clinicId, Model model) {
+        model.addAttribute("employeeId", employeeId);
+        model.addAttribute("clinicId", clinicId);
+        return "clinic-emp-delete-confirm";
+    }
     @PostMapping("/employees/remove/{employeeId}")
     public String removeEmployee(@PathVariable Long employeeId,
                                  @RequestParam Long clinicId,
@@ -131,6 +136,11 @@ public class ClinicController {
         model.addAttribute("others", getUnemployedDoctors(USER_REPOSITORY.findAll(), clinic.getId(), principal));
 
         return "clinic-employees";
+    }
+    @GetMapping("/confirm-delete")
+    public String confirmDelete(@RequestParam Long clinicId, Model model) {
+        model.addAttribute("clinicId", clinicId);
+        return "clinic-delete-confirm";
     }
 
     @PostMapping("/delete")
