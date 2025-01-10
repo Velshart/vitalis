@@ -21,7 +21,6 @@ public class SpringSecurity {
                             .requestMatchers("/login").permitAll()
                             .requestMatchers("/clinic/**").hasAuthority("DOCTOR")
                             .requestMatchers("/doctor/**").hasAuthority("DOCTOR")
-                            .requestMatchers("/css/**").permitAll()
                             .anyRequest().authenticated();
 
                 }).formLogin(formLogin -> formLogin.loginPage("/login")

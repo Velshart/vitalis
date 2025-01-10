@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Clinic Confirmation</title>
+</head>
+<body>
+<h1>Czy na pewno chcesz usunąć klinikę?</h1>
+
+<form method="post" th:action="@{/clinic/delete}">
+    <input type="hidden" name="id" th:value="${clinicId}">
+    <button type="submit">Tak</button>
+</form>
+<br>
+<form th:action="@{/doctor/owned-clinics}" method="get">
+    <button type="submit">Nie</button>
+</form>
+
+</body>
+</html>

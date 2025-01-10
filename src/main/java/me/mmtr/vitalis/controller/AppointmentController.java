@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +34,6 @@ public class AppointmentController {
 
     @GetMapping("/choose-clinic")
     public String addAppointment(@ModelAttribute Appointment appointment, Model model) {
-
         model.addAttribute("appointment", appointment);
         model.addAttribute("clinics", clinicService.getAll());
         return "appointment-clinic-choose";
@@ -51,14 +52,12 @@ public class AppointmentController {
 
         redirectAttributes.addFlashAttribute("patient", appointment.getPatient());
         redirectAttributes.addFlashAttribute("clinic", appointment.getClinic());
-
         redirectAttributes.addFlashAttribute("appointment", appointment);
         return "redirect:/appointment/add";
     }
 
     @GetMapping("/add")
     public String addAppointment(Model model) {
-
         Appointment appointment = (Appointment) model.asMap().get("appointment");
 
         List<User> doctors = userRepository.findAll().stream()
@@ -69,7 +68,7 @@ public class AppointmentController {
 
         model.addAttribute("appointment", appointment);
         model.addAttribute("doctors", doctors);
-
+        model.addAttribute("currentDate", LocalDate.now());
         return "appointment";
     }
 
@@ -78,7 +77,6 @@ public class AppointmentController {
                                   @RequestParam Long doctorId,
                                   @RequestParam Long patientId,
                                   @RequestParam Long clinicId) {
-
         User doctor = userRepository.findById(doctorId).orElseThrow();
         appointment.setDoctor(doctor);
 
@@ -94,11 +92,11 @@ public class AppointmentController {
 
     @GetMapping("/update/{id}")
     public String update(@PathVariable Long id, Model model) {
-        Optional<Appointment> noteOptional = appointmentService.findById(id);
-        if (noteOptional.isEmpty()) {
+        Optional<Appointment> appointmentOptional = appointmentService.findById(id);
+        if (appointmentOptional.isEmpty()) {
             return "redirect:/home";
         }
-        model.addAttribute("note", noteOptional.get());
+        model.addAttribute("note", appointmentOptional.get());
         return "appointment";
     }
 
@@ -108,10 +106,22 @@ public class AppointmentController {
         return "redirect:/patient/home";
     }
 
-
     @PostMapping("/delete")
     public String delete(@RequestParam Long id) {
         appointmentService.delete(id);
-        return "redirect:/appointment/all";
+        return "redirect:/patient/all-appointments";
+    }
+
+    @GetMapping("/confirm-delete/{appointmentId}")
+    public String deleteConfirm(@PathVariable String appointmentId) {
+        return "appointment-delete-confirm";
+    }
+
+    @GetMapping("/exists")
+    @ResponseBody
+    public boolean checkAppointmentExists(@RequestParam Long doctorId,
+                                          @RequestParam LocalDate date,
+                                          @RequestParam LocalTime time) {
+        return appointmentService.existsByDoctorAndDateAndTime(doctorId, date, time);
     }
 }

@@ -14,8 +14,8 @@
         <div th:text="${clinic.name}"></div>
         <a th:href="@{/clinic/update/{id}(id=${clinic.id})}">Szczegóły</a>
 
-        <form method="post" th:action="@{/clinic/delete}">
-            <input type="hidden" name="id" th:value="${clinic.id}">
+        <form method="get" th:action="@{/clinic/confirm-delete}">
+            <input type="hidden" name="clinicId" th:value="${clinic.id}">
             <input type="submit" value="Usuń">
         </form>
     </div>
