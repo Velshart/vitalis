@@ -46,15 +46,6 @@ public class InvitationServiceImpl implements InvitationService {
 
     @Override
     @Transactional
-    public void updateStatus(Long id, InvitationStatus status) {
-        Invitation invitation = INVITATION_DAO.getById(id).orElseThrow();
-        invitation.setStatus(status);
-
-        saveOrUpdate(invitation);
-    }
-
-    @Override
-    @Transactional
     public void saveInvitation(Invitation invitation) {
         INVITATION_DAO.saveOrUpdate(invitation);
     }
