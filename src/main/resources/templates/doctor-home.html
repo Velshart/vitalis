@@ -27,6 +27,11 @@
 </form>
 <br>
 
+<form th:action="@{/doctor/pending-invitations}" method="get">
+    <button type="submit">Kliniki zapraszające do współpracy</button>
+</form>
+<br>
+
 <h1>Plan wizyt: </h1>
 <div th:each="scheduledAppointment : ${scheduledAppointments}">
     <div th:text="${scheduledAppointment.clinic.getName() + ' ul. ' + scheduledAppointment.getClinic().street}"></div>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kliniki zapraszające do współpracy</title>
+</head>
+<body>
+
+<h1>Kliniki:</h1>
+<div th:each="pendingInvitation : ${pendingInvitations}">
+    <div>
+        <div th:text="${pendingInvitation.clinic.name}"></div>
+        <div th:text="${pendingInvitation.status.getStatus()}"></div>
+        <a th:href="@{/doctor/invitation-doctor-view/{id}(id=${pendingInvitation.id})}"> Więcej informacji </a>
+    </div>
+</div>
+<br>
+
+<form th:action="@{/doctor/home}" method="get">
+    <button type="submit">Wróć</button>
+</form>
+
+
+</body>
+</html>

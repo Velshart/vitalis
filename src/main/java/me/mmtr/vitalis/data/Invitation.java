@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.mmtr.vitalis.data.enums.InvitationStatus;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -11,27 +13,28 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "invitation")
+@Table(name = "invitations")
 public class Invitation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private User patient;
+    @Enumerated(EnumType.STRING)
+    private InvitationStatus status = InvitationStatus.PENDING;
 
     @ManyToOne
-    @JoinColumn(name = "clinic_id")
+    @JoinColumn(name = "clinic_id", nullable = false)
     private Clinic clinic;
+
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", nullable = false)
+    private User doctor;
 
     @Column
     private LocalDate date;
 
     @Column
     private LocalTime time;
-
-    private boolean accepted;
 
 }

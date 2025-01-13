@@ -2,10 +2,13 @@ package me.mmtr.vitalis.controller;
 
 import jakarta.validation.Valid;
 import me.mmtr.vitalis.data.Clinic;
+import me.mmtr.vitalis.data.Invitation;
 import me.mmtr.vitalis.data.User;
+import me.mmtr.vitalis.data.enums.InvitationStatus;
 import me.mmtr.vitalis.data.enums.Specialization;
 import me.mmtr.vitalis.repository.UserRepository;
 import me.mmtr.vitalis.service.interfaces.ClinicService;
+import me.mmtr.vitalis.service.interfaces.InvitationService;
 import me.mmtr.vitalis.service.interfaces.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,12 +28,14 @@ public class ClinicController {
     private final ClinicService CLINIC_SERVICE;
     private final UserService USER_SERVICE;
     private final UserRepository USER_REPOSITORY;
+    private final InvitationService INVITATION_SERVICE;
 
 
-    public ClinicController(ClinicService CLINIC_SERVICE, UserService USER_SERVICE, UserRepository USER_REPOSITORY) {
+    public ClinicController(ClinicService CLINIC_SERVICE, UserService USER_SERVICE, UserRepository USER_REPOSITORY, InvitationService invitationService) {
         this.CLINIC_SERVICE = CLINIC_SERVICE;
         this.USER_SERVICE = USER_SERVICE;
         this.USER_REPOSITORY = USER_REPOSITORY;
+        this.INVITATION_SERVICE = invitationService;
     }
 
     @GetMapping("/add")
@@ -100,12 +105,13 @@ public class ClinicController {
     }
 
     @PostMapping("/employees/add/{employeeId}")
-    public String addEmployee(@PathVariable Long employeeId,
+    public String addEmployee(@ModelAttribute Invitation invitation,
+                              @PathVariable Long employeeId,
                               @RequestParam Long clinicId,
                               Principal principal,
                               RedirectAttributes redirectAttributes) {
 
-        updateEmployeeList(clinicId, employeeId, redirectAttributes, principal, true);
+        updateEmployeeList(invitation, clinicId, employeeId, redirectAttributes, principal, true);
 
         return "redirect:/clinic/employees/" + clinicId;
     }
@@ -116,24 +122,29 @@ public class ClinicController {
         return "clinic-emp-delete-confirm";
     }
     @PostMapping("/employees/remove/{employeeId}")
-    public String removeEmployee(@PathVariable Long employeeId,
+    public String removeEmployee(@ModelAttribute Invitation invitation,
+                                 @PathVariable Long employeeId,
                                  @RequestParam Long clinicId,
                                  Principal principal,
                                  RedirectAttributes redirectAttributes) {
 
-        updateEmployeeList(clinicId, employeeId, redirectAttributes, principal, false);
+        updateEmployeeList(invitation, clinicId, employeeId, redirectAttributes, principal, false);
 
         return "redirect:/clinic/employees/" + clinicId;
     }
 
     @GetMapping("/employees/{id}")
-    public String showEmployees(@PathVariable Long id, Model model, Principal principal) {
+    public String showEmployees(@ModelAttribute Invitation invitation,
+                                @PathVariable Long id,
+                                Model model,
+                                Principal principal) {
 
         Clinic clinic = CLINIC_SERVICE.getById(id).orElseThrow();
 
         model.addAttribute("clinic", clinic);
         model.addAttribute("employees", clinic.getEmployees());
         model.addAttribute("others", getUnemployedDoctors(USER_REPOSITORY.findAll(), clinic.getId(), principal));
+        model.addAttribute("invitation", invitation);
 
         return "clinic-employees";
     }
@@ -149,14 +160,26 @@ public class ClinicController {
         return "redirect:/doctor/owned-clinics";
     }
 
-    private void updateEmployeeList(Long clinicId,
+    private void updateEmployeeList(@ModelAttribute Invitation invitation,
+                                    Long clinicId,
                                     Long employeeId,
                                     RedirectAttributes redirectAttributes,
                                     Principal principal,
                                     boolean add) {
+        Clinic clinic = CLINIC_SERVICE.getById(clinicId).orElseThrow(() ->
+                new RuntimeException("Clinic not found with id: " + clinicId));
+        User user = USER_REPOSITORY.findById(employeeId).orElseThrow(() ->
+                new RuntimeException("User not found with id: " + employeeId));
+
         if (add) {
-            CLINIC_SERVICE.addEmployeeToClinic(clinicId, employeeId);
+            invitation.setClinic(clinic);
+            invitation.setDoctor(user);
+            invitation.setDate(java.time.LocalDate.now());
+            invitation.setTime(java.time.LocalTime.now());
+
+            INVITATION_SERVICE.saveInvitation(invitation);
         } else {
+            INVITATION_SERVICE.delete(invitation.getId());
             CLINIC_SERVICE.removeEmployeeFromClinic(clinicId, employeeId);
         }
         addRedirectAttributes(redirectAttributes, clinicId, principal);
@@ -179,6 +202,12 @@ public class ClinicController {
                 .filter(User::getIsDoctor)
                 .filter(user -> !user.getUsername().equals(principal.getName()))
                 .filter(user -> !clinic.getEmployees().contains(user))
+                .filter(user -> INVITATION_SERVICE.getAll().stream()
+                        .noneMatch(invitation -> invitation.getDoctor().equals(user)
+                                && invitation.getClinic().equals(clinic)
+                                && invitation.getStatus().equals(InvitationStatus.PENDING)))
                 .collect(Collectors.toList());
     }
 }
+
+

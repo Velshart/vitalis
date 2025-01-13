@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Szczegóły Kliniki</title>
+</head>
+<body>
+
+<div>
+  <form th:action="@{/doctor/invitation-doctor-view/{id}(id=${invitation.id})}" method="post">
+
+    <div>
+      <label>Zaproszenie:</label>
+      <span th:text="'Zostałeś zaproszony do ' + ${invitation.clinic.name} + ' dnia ' + ${invitation.date} + ' o godzinie ' + ${invitation.time}"></span>
+    </div>
+    <br>
+
+    <label for="invitationStatus">Status:</label>
+    <select id="invitationStatus" name="invitationStatus" required>
+      <option value="" disabled selected>Wybierz opcje</option>
+      <option th:each="status : ${statuses}"
+              th:value="${status.name()}"
+              th:text="${status.getStatus()}">Status
+      </option>
+    </select><br>
+
+    <button type="submit">Zatwierdź</button>
+
+  </form>
+  <br>
+
+  <form th:action="@{/doctor/home}" method="get">
+    <button type="submit">Wróć</button>
+  </form>
+</div>
+
+</body>
+</html>
