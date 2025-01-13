@@ -46,13 +46,14 @@
         <br>
 
         <label>Specjalizacje:</label>
-        <div th:each="specialization : ${specializations}">
-            <input type="checkbox"
-                   th:value="${specialization}"
-                   th:field="*{clinic.specializations}"
-                   th:checked="${clinic.specializations.contains(specialization)}"/>
-            <span th:text="${specialization.getName()}"></span>
-        </div>
+        <br>
+        <select th:field="*{clinic.specializations}" multiple>
+            <option th:each="specialization : ${specializations}"
+                    th:value="${specialization}"
+                    th:text="${specialization.getName()}"
+                    th:selected="${clinic.specializations.contains(specialization)}">
+            </option>
+        </select>
         <br>
 
         <input type="submit" value="Zatwierdź">
