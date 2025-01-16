@@ -3,68 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <title>Szczegóły kliniki</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="/css/doctor.css">
+    <link rel="icon" type="image/x-icon" href="/css/favicon.ico">
 </head>
 <body>
-<h1>Szczegóły kliniki</h1>
-
-<div>
-    <form>
-
-        <div>
-            <label>Właściciel:</label>
-            <span th:text="${clinic.getOwner().username}"></span>
+<header>
+    <div class="logo">
+        <img src="/img/logo.png" alt="Logo">
+    </div>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="main-content">
+    <div class="container">
+        <h1>Szczegóły kliniki</h1>
+        <div class="form-container">
+            <form>
+                <div>
+                    <label>Właściciel:</label>
+                    <span th:text="${clinic.getOwner().username}"></span>
+                </div>
+                <br>
+                <div>
+                    <label>Nazwa:</label>
+                    <span th:text="${clinic.name}"></span>
+                </div>
+                <br>
+                <div>
+                    <label>Ulica:</label>
+                    <span th:text="${clinic.street}"></span>
+                </div>
+                <br>
+                <div>
+                    <label>Budynek:</label>
+                    <span th:text="${clinic.buildingNumber}"></span>
+                </div>
+                <br>
+                <div>
+                    <label>Kod pocztowy:</label>
+                    <span th:text="${clinic.postalCode}"></span>
+                </div>
+                <br>
+                <div>
+                    <label>Miasto:</label>
+                    <span th:text="${clinic.city}"></span>
+                </div>
+                <br>
+                <div>
+                    <label>Telefon:</label>
+                    <span th:text="${clinic.phoneNumber}"></span>
+                </div>
+                <br>
+                <label>Specjalizacje:</label>
+                <div th:each="specialization : ${specializations}">
+                    <span th:text="${specialization.getName()}"></span>
+                </div>
+                <br>
+            </form>
+            <form th:action="@{/doctor/clinics-employed}" method="get">
+                <button type="submit">Wróć</button>
+            </form>
         </div>
-        <br>
-
-        <div>
-            <label>Nazwa:</label>
-            <span th:text="${clinic.name}"></span>
-        </div>
-        <br>
-
-        <div>
-            <label>Ulica:</label>
-            <span th:text="${clinic.street}"></span>
-        </div>
-        <br>
-
-        <div>
-            <label>Budynek:</label>
-            <span th:text="${clinic.buildingNumber}"></span>
-        </div>
-        <br>
-
-        <div>
-            <label>Kod pocztowy:</label>
-            <span th:text="${clinic.postalCode}"></span>
-        </div>
-        <br>
-
-        <div>
-            <label>Miasto:</label>
-            <span th:text="${clinic.city}"></span>
-        </div>
-        <br>
-
-        <div>
-            <label>Telefon:</label>
-            <span th:text="${clinic.phoneNumber}"></span>
-        </div>
-        <br>
-
-        <label>Specjalizacje:</label>
-        <div th:each="specialization : ${specializations}">
-            <span th:text="${specialization.getName()}"></span>
-        </div>
-        <br>
-    </form>
-
-
-    <form th:action="@{/doctor/clinics-employed}" method="get">
-        <button type="submit">Wróć</button>
-    </form>
+    </div>
 </div>
-
 </body>
 </html>

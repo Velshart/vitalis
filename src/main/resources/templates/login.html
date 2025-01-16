@@ -1,36 +1,46 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/form.css">
+    <link rel="icon" type="image/x-icon" href="/css/favicon.ico">
     <meta charset="UTF-8">
-    <title>Authentication</title>
+    <title>Logowanie</title>
 </head>
-
 <body>
-<h1>Logowanie</h1>
-
-<div th:if="${error}" th:text="${error}"></div>
-<form th:action="@{/login}" method="post">
-    <div>
-        <label for="username">Nazwa użytkownika:</label>
-        <input th:type="text" id="username" th:name="username" required/>
+<header>
+    <div class="logo">
+        <img src="/img/logo.png" alt="Logo">
     </div>
-    <br>
-
-    <div>
-        <label for="password">Hasło</label>
-        <input type="password" id="password" name="password" required/>
-    </div>
-    <br>
-
-    <div>
-        <button type="submit">Zaloguj się</button>
-    </div>
-</form>
-<br>
-
-<div>
-    <label>Nie posiadasz konta?</label>
-    <a th:href="@{/register}">Zarejestruj się teraz</a>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="container">
+    <h1>Logowanie</h1>
+    <div th:if="${error}" th:text="${error}"></div>
+    <form th:action="@{/login}" method="post">
+        <div id="logowanie">
+            <label for="username">Nazwa użytkownika</label>
+            <input th:type="text" id="username" th:name="username" required/>
+        </div>
+        <div>
+            <label for="password">Hasło</label>
+            <input type="password" id="password" name="password" required/>
+        </div>
+        <div>
+            <button type="submit">Zaloguj się</button>
+        </div>
+        <div>
+            <label>Nie posiadasz konta?</label>
+            <button type="button" onclick="window.location.href='/register'">Zarejestruj się teraz</button>
+        </div>
+    </form>
 </div>
 </body>
 </html>

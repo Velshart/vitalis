@@ -2,65 +2,70 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/doctor.css">
+    <link rel="icon" type="image/x-icon" href="/css/favicon.ico">
     <title>Szczegóły wizyty</title>
-    <link rel="stylesheet" href="../static/css/styles.css">
 </head>
 <body>
-
-<div>
-    <form th:action="@{/doctor/appointment-doctor-view/{id}(id=${appointment.id})}" method="post">
-
-        <div>
-            <label>Nazwa kliniki: </label>
-            <span th:text="${appointment.clinic.name}"></span>
-        </div>
+<header>
+    <div class="logo">
+        <img src="/img/logo.png" alt="Logo">
+    </div>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="container">
+    <h1>Szczegóły wizyty</h1>
+    <div class="form-container">
+        <form th:action="@{/doctor/appointment-doctor-view/{id}(id=${appointment.id})}" method="post">
+            <div>
+                <label>Nazwa kliniki: </label>
+                <span th:text="${appointment.clinic.name}"></span>
+            </div>
+            <br>
+            <div>
+                <label>Data: </label>
+                <span th:text="${appointment.date}"></span>
+            </div>
+            <br>
+            <div>
+                <label>Godzina: </label>
+                <span th:text="${appointment.time}"></span>
+            </div>
+            <br>
+            <div>
+                <label>Komentarz pacjenta: </label>
+                <span th:text="${appointment.comment}"></span>
+            </div>
+            <br>
+            <div>
+                <label>Status wizyty: </label>
+                <span th:text="${appointment.status.getStatus()}"></span>
+            </div>
+            <br>
+            <label for="appointmentStatus">Status:</label>
+            <select id="appointmentStatus" name="appointmentStatus" required>
+                <option value="" disabled selected>Zmień status</option>
+                <option th:each="status : ${statuses}"
+                        th:value="${status.name()}"
+                        th:text="${status.getStatus()}">Status
+                </option>
+            </select><br>
+            <label for="reasonForChange">(Opcjonalnie) Komentarz do zmiany statusu: </label>
+            <textarea id="reasonForChange" name="reasonForChange" rows="4"></textarea><br>
+            <button type="submit">Zatwierdź</button>
+        </form>
         <br>
-
-        <div>
-            <label>Data: </label>
-            <span th:text="${appointment.date}"></span>
-        </div>
-        <br>
-
-        <div>
-            <label>Godzina: </label>
-            <span th:text="${appointment.time}"></span>
-        </div>
-        <br>
-
-        <div>
-            <label>Komentarz pacjenta: </label>
-            <span th:text="${appointment.comment}"></span>
-        </div>
-        <br>
-
-        <div>
-            <label>Status wizyty: </label>
-            <span th:text="${appointment.status.getStatus()}"></span>
-        </div>
-        <br>
-
-        <label for="appointmentStatus">Status:</label>
-        <select id="appointmentStatus" name="appointmentStatus" required>
-            <option value="" disabled selected>Zmień status</option>
-            <option th:each="status : ${statuses}"
-                    th:value="${status.name()}"
-                    th:text="${status.getStatus()}">Status
-            </option>
-        </select><br>
-
-        <label for="reasonForChange">(Opcjonalnie) Komentarz do zmiany statusu: </label>
-        <input id="reasonForChange" type="text" name="reasonForChange"><br>
-
-        <button type="submit">Zatwierdź</button>
-
-    </form>
-    <br>
-
-    <form th:action="@{/doctor/home}" method="get">
-        <button type="submit">Wróć</button>
-    </form>
+        <form th:action="@{/doctor/home}" method="get">
+            <button type="submit">Wróć</button>
+        </form>
+    </div>
 </div>
-
 </body>
 </html>

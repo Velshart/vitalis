@@ -2,19 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Delete Clinic Confirmation</title>
+    <title>Potwierdź usunięcie kliniki</title>
+    <link rel="stylesheet" href="/css/doctor.css">
+    <link rel="icon" type="image/x-icon" href="/css/favicon.ico">
 </head>
 <body>
-<h1>Czy na pewno chcesz usunąć klinikę?</h1>
-
-<form method="post" th:action="@{/clinic/delete}">
-    <input type="hidden" name="id" th:value="${clinicId}">
-    <button type="submit">Tak</button>
-</form>
-<br>
-<form th:action="@{/doctor/owned-clinics}" method="get">
-    <button type="submit">Nie</button>
-</form>
-
+<header>
+    <div class="logo">
+        <img src="/img/logo.png" alt="Logo">
+    </div>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="main-content">
+    <div class="container">
+        <h1>Czy na pewno chcesz usunąć klinikę?</h1>
+        <div class="form-container">
+            <form method="post" th:action="@{/clinic/delete}">
+                <input type="hidden" name="id" th:value="${clinicId}">
+                <button type="submit">Tak</button>
+            </form>
+            <form th:action="@{/doctor/owned-clinics}" method="get">
+                <button type="submit">Nie</button>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

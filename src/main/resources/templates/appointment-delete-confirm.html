@@ -2,19 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="/css/appointment.css">
+    <link rel="icon" type="image/x-icon" href="/css/favicon.ico">
+    <title>Usunięcie wizyty</title>
 </head>
 <body>
-<h1>Czy na pewno chcesz usunąć wizytę?</h1>
-
-<form method="post" th:action="@{/appointment/delete}">
-    <input type="hidden" name="id" th:value="${appointmentId}">
-    <button type="submit">Tak</button>
-</form>
-
-<form th:action="@{/patient/all-appointments}" method="get">
-    <button type="submit">Nie</button>
-</form>
-
+<header>
+    <div class="logo">
+        <img src="/img/logo.png" alt="Logo">
+    </div>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="container">
+    <h1>Czy na pewno chcesz usunąć wizytę?</h1>
+    <div class="form-container">
+        <form method="post" th:action="@{/appointment/delete}">
+            <input type="hidden" name="id" th:value="${appointmentId}">
+            <button type="submit">Tak</button>
+        </form>
+        <form th:action="@{/patient/all-appointments}" method="get">
+            <button type="submit">Nie</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

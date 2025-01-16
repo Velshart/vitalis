@@ -1,0 +1,130 @@
+/* doctor.css */
+body {
+  display: flex;
+  height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #ffffff; /* Set the background color to white */
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px; /* Set a fixed width for the header */
+  height: 100vh; /* Make the header full height */
+  position: fixed; /* Fix the header to the left side */
+  background: #4d88aa;
+  color: #f1f1f1;
+  padding-top: 20px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.logo img {
+  height: 80px;
+  margin-bottom: 20px;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+nav ul li {
+  margin: 20px 0;
+  width: 100%;
+  text-align: center;
+}
+
+nav ul li a {
+  color: #f1f1f1;
+  text-decoration: none;
+  font-size: 18px;
+  display: block;
+  padding: 10px 0;
+  width: 100%;
+}
+
+nav ul li a:hover {
+  background-color: #3b6a8a;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% - 200px); /* Adjust width to account for the header */
+  margin-left: 200px; /* Add margin to the left to make space for the header */
+  height: 100vh; /* Ensure the main content takes full height */
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h1 {
+  color: #4d88aa;
+  margin-bottom: 20px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #f0f0f0; /* Set the background color of the form to gray */
+  width: 100%;
+  max-width: 600px;
+}
+
+label, span {
+  margin-bottom: 5px;
+  color: #333;
+  text-align: left; /* Align text to the left */
+  width: 100%; /* Ensure the label takes full width */
+}
+
+select, input, textarea, button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical; /* Allow vertical resizing */
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #0c3761; /* Set the button background color to blue */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0d4276; /* Darken the button color on hover */
+}
+
+button[type="submit"] {
+  margin-bottom: 0;
+}
