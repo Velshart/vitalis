@@ -4,9 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum InvitationStatus {
-    PENDING("Oczek. na zatwierdzenie"),
-    ACCEPT("Zatwierdź"),
-    REJECT("Odrzuć");
+    PENDING("Oczek. na zatwierdzenie");
 
     private final String status;
 
