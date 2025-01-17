@@ -5,28 +5,27 @@
     <title>Panel lekarza</title>
 </head>
 <body>
-<h1>Panel lekarza</h1>
+<h1 th:text="'Witaj, ' + ${name}"></h1>
 
-<form th:action="@{/doctor/owned-clinics}" method="get">
-    <button type="submit">Moje Kliniki</button>
+<form th:action="@{/doctor/scheduled-appointments}" method="get">
+    <button type="submit">Terminarz wizyt</button>
 </form><br>
+
+<form th:action="@{/doctor/pending-appointments}" method="get">
+    <button type="submit">Wizyty oczekujące na zatwierdzenie</button>
+</form>
+<br>
 
 <form th:action="@{/doctor/choose-specializations}" method="get">
     <button type="submit">Moje specjalizacje</button>
 </form><br>
 
+<form th:action="@{/doctor/owned-clinics}" method="get">
+    <button type="submit">Moje Kliniki</button>
+</form><br>
+
 <form th:action="@{/doctor/clinics-employed}" method="get">
     <button type="submit">Kliniki, w których pracuję</button>
-</form>
-<br>
-
-<form th:action="@{/clinic/add}" method="get">
-    <button type="submit">Zarejestruj nową klinikę</button>
-</form>
-<br>
-
-<form th:action="@{/doctor/pending-appointments}" method="get">
-    <button type="submit">Wizyty oczekujące na zatwierdzenie</button>
 </form>
 <br>
 
@@ -35,9 +34,10 @@
 </form>
 <br>
 
-<form th:action="@{/doctor/scheduled-appointments}" method="get">
-    <button type="submit">Terminarz wizyt</button>
-</form><br>
+<form th:action="@{/clinic/add}" method="get">
+    <button type="submit">Zarejestruj nową klinikę</button>
+</form>
+<br>
 
 <form th:action="@{/logout}" method="post">
     <button type="submit">Wyloguj się</button>

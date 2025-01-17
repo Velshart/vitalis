@@ -5,15 +5,15 @@
     <title>Home</title>
 </head>
 <body>
-<h1>Panel pacjenta</h1>
+<h1 th:text="'Witaj, ' + ${name}"></h1>
 
-<form th:action="@{/appointment/choose-clinic}" method="get">
-    <button type="submit">Zapisz się na wizytę</button>
+<form th:action="@{/patient/all-appointments}" method="get">
+    <button type="submit">Moje wizyty</button>
 </form>
 <br>
 
-<form th:action="@{/patient/all-appointments}" method="get">
-    <button type="submit">Twoje wizyty</button>
+<form th:action="@{/appointment/choose-clinic}" method="get">
+    <button type="submit">Zapisz się na wizytę</button>
 </form>
 <br>
 

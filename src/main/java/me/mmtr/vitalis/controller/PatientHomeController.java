@@ -54,7 +54,8 @@ public class PatientHomeController {
     }
 
     @GetMapping("/home")
-    public String patient() {
+    public String patient(Model model, Principal principal) {
+        model.addAttribute("name", principal.getName());
         return "patient-home";
     }
 

@@ -13,7 +13,7 @@
         <option value="" disabled selected>Wybierz klinikę</option>
         <option th:each="clinic : ${clinics}"
                 th:value="${clinic.id}"
-                th:text="${clinic.name}">Klinika
+                th:text="${clinic.name + ' - ' + clinicSpecializations.get(clinic.name)}">Klinika
         </option>
     </select>
 

@@ -116,6 +116,8 @@ public class DoctorHomeController {
 
     @GetMapping("/home")
     public String doctor(Principal principal, Model model) {
+        model.addAttribute("name", principal.getName());
+
         model.addAttribute("scheduledAppointments", getAppointments(principal, AppointmentStatus.SCHEDULED)
                 .stream()
                 .sorted(Comparator.comparing(Appointment::getDate).thenComparing(Appointment::getTime)).toList());
