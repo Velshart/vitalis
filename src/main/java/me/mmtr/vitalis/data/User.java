@@ -26,6 +26,14 @@ public class User {
 
     @Column(nullable = false)
     private Boolean isDoctor;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+            joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
+            inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")})
+    private List<Role> roles = new ArrayList<>();
+    @ManyToMany(mappedBy = "employees")
+    @EqualsAndHashCode.Exclude
+    private Set<Clinic> clinics = new HashSet<>();
 
     @Override
     public int hashCode() {
@@ -39,14 +47,4 @@ public class User {
         User user = (User) o;
         return Objects.equals(id, user.id);
     }
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_roles",
-            joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
-            inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")})
-    private List<Role> roles = new ArrayList<>();
-
-    @ManyToMany(mappedBy = "employees")
-    @EqualsAndHashCode.Exclude
-    private Set<Clinic> clinics = new HashSet<>();
 }

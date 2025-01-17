@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Terminarz wizyt</title>
+</head>
+<body>
+
+<h1>Terminarz wizyt</h1>
+
+<h2>Wizyty na dziś:</h2>
+<div th:each="scheduledAppointmentForToday : ${scheduledAppointmentsForToday}">
+    <a th:href="'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=' +
+     ${scheduledAppointmentForToday.getClinic().street} +','+
+     ${scheduledAppointmentForToday.getClinic().getBuildingNumber()}">
+        Pokaż trasę do kliniki
+    </a>
+
+    <div th:text="${scheduledAppointmentForToday.clinic.getName() + ' ul. '
+     + scheduledAppointmentForToday.getClinic().street + ' '
+      + scheduledAppointmentForToday.getClinic().getBuildingNumber()}">
+    </div>
+
+    <div th:text="${scheduledAppointmentForToday.date + ' godz. ' + scheduledAppointmentForToday.time}"></div>
+    <div th:text="${scheduledAppointmentForToday.comment}"></div>
+
+    <a th:href="@{/doctor/appointment-doctor-view/{id}(id=${scheduledAppointmentForToday.id})}">Zmień status</a>
+</div><br>
+
+<h2>Pozostałe wizyty:</h2>
+<div th:each="otherAppointment : ${otherAppointments}">
+    <a th:href="'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=' +
+     ${otherAppointment.getClinic().street} +','+
+     ${otherAppointment.getClinic().getBuildingNumber()}">
+        Pokaż trasę do kliniki
+    </a>
+
+    <div th:text="${otherAppointment.clinic.getName() + ' ul. '
+     + otherAppointment.getClinic().street + ' '
+      + otherAppointment.getClinic().getBuildingNumber()}">
+    </div>
+
+    <div th:text="${otherAppointment.date + ' godz. ' + otherAppointment.time}"></div>
+    <div th:text="${otherAppointment.comment}"></div>
+
+    <a th:href="@{/doctor/appointment-doctor-view/{id}(id=${otherAppointment.id})}">Zmień status</a>
+</div><br>
+
+<form th:action="@{/doctor/home}" method="get">
+    <button type="submit">Wróć</button>
+</form>
+</body>
+</html>

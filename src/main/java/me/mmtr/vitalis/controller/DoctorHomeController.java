@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -34,6 +35,23 @@ public class DoctorHomeController {
         this.userService = userService;
         this.clinicService = clinicService;
         this.invitationService = invitationService;
+    }
+
+    @GetMapping("/scheduled-appointments")
+    public String scheduledAppointments(Principal principal, Model model) {
+        List<Appointment> scheduledAppointmentsForToday = getAppointments(principal, AppointmentStatus.SCHEDULED)
+                .stream()
+                .filter(appointment -> appointment.getDate().equals(LocalDate.now()))
+                .toList();
+
+        List<Appointment> otherAppointments = getAppointments(principal, AppointmentStatus.SCHEDULED)
+                .stream()
+                .filter(appointment -> !appointment.getDate().equals(LocalDate.now()))
+                .toList();
+
+        model.addAttribute("scheduledAppointmentsForToday", scheduledAppointmentsForToday);
+        model.addAttribute("otherAppointments", otherAppointments);
+        return "doctor-scheduled-appointments";
     }
 
     @GetMapping("/owned-clinics")

@@ -10,8 +10,16 @@
     <form th:action="@{/doctor/appointment-doctor-view/{id}(id=${appointment.id})}" method="post">
 
         <div>
-            <label>Nazwa kliniki: </label>
-            <span th:text="${appointment.clinic.name}"></span>
+            <label>Klinika: </label>
+            <span th:text="${appointment.clinic.name + ' ul. '
+                + appointment.clinic.street + ' '
+                + appointment.clinic.buildingNumber}"></span>
+        </div>
+        <br>
+
+        <div>
+            <label>Pacjent: </label>
+            <span th:text="${appointment.patient.getUsername()}"></span>
         </div>
         <br>
 

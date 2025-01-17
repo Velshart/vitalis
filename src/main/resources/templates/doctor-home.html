@@ -32,22 +32,9 @@
 </form>
 <br>
 
-<h1>Plan wizyt: </h1>
-<div th:each="scheduledAppointment : ${scheduledAppointments}">
-    <a th:href="'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=' + ${scheduledAppointment.getClinic().street} + ',' + ${scheduledAppointment.getClinic().getBuildingNumber()}">
-        Pokaż trasę do kliniki
-    </a>
-
-    <div th:text="${scheduledAppointment.clinic.getName() + ' ul. '
-     + scheduledAppointment.getClinic().street + ' '
-      + scheduledAppointment.getClinic().getBuildingNumber()}">
-    </div>
-
-    <div th:text="${scheduledAppointment.date + ' godz. ' + scheduledAppointment.time}"></div>
-    <div th:text="${scheduledAppointment.comment}"></div>
-
-    <a th:href="@{/doctor/appointment-doctor-view/{id}(id=${scheduledAppointment.id})}">Zmień status</a>
-</div><br>
+<form th:action="@{/doctor/scheduled-appointments}" method="get">
+    <button type="submit">Terminarz wizyt</button>
+</form><br>
 
 <form th:action="@{/logout}" method="post">
     <button type="submit">Wyloguj się</button>
