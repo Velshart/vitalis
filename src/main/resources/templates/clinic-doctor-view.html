@@ -3,6 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Rejestracja kliniki</title>
+    <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content label {
+            display: block;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .dropdown-content label:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 <h1>Twoja klinika</h1>
@@ -48,13 +77,13 @@
         <a th:href="@{/clinic/employees/{id}(id=${clinic.id})}">Pracownicy</a><br>
 
         <label>Specjalizacje:</label>
-        <div th:each="specialization : ${specializations}">
-            <input type="checkbox"
-                   th:value="${specialization}"
-                   th:field="*{clinic.specializations}"
-                   th:checked="${clinic.specializations.contains(specialization)}"/>
-            <span th:text="${specialization.getName()}"></span>
-        </div>
+        <select name="clinic.specializations" th:field="*{clinic.specializations}" multiple>
+            <option th:each="specialization : ${specializations}"
+                    th:value="${specialization}"
+                    th:text="${specialization.getName()}"
+                    th:checked="${clinic.specializations.contains(specialization)}">
+            </option>
+        </select>
         <br>
 
         <input type="submit" value="Zapisz i wyjdź">
