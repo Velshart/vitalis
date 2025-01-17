@@ -62,7 +62,18 @@
 
     <form th:action="@{/doctor/clinics-employed}" method="get">
         <button type="submit">Wróć</button>
-    </form>
+    </form><br>
+
+    <div style="width: 50%; height: 400px;">
+        <iframe
+                width="110%"
+                height="100%"
+                style="border:0"
+                th:src="'https://www.google.com/maps/embed/v1/place?key=AIzaSyBWVBP2SeZv0I1Bk4XHdf1XgdvyoDnWG9c&q=' +
+                ${clinic.street} + '+' + ${clinic.buildingNumber} + ',' + ${clinic.city}"
+                allowfullscreen>
+        </iframe>
+    </div>
 </div>
 
 </body>

@@ -16,6 +16,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -76,12 +78,17 @@ public class ClinicController {
     @GetMapping("/update/{id}")
     public String update(@PathVariable Long id, Model model) {
         Optional<Clinic> clinicOptional = CLINIC_SERVICE.getById(id);
+        Clinic clinic = clinicOptional.orElseThrow();
 
         if (clinicOptional.isEmpty()) {
             return "redirect:/doctor/owned-clinics";
         }
         model.addAttribute("clinic", clinicOptional.get());
         model.addAttribute("specializations", Specialization.values());
+        model.addAttribute("encodedURL", URLEncoder.encode(
+                "https://www.google.com/maps/embed/v1/place?key=AIzaSyBWVBP2SeZv0I1Bk4XHdf1XgdvyoDnWG9c&q="
+                        + clinic.getStreet() + "+" + clinic.getBuildingNumber() + "," + clinic.getCity(),
+                StandardCharsets.UTF_8));
         return "clinic-doctor-view";
     }
 
