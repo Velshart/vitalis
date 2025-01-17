@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Rejestracja kliniki</title>
+
 </head>
 <body>
 <h1>Twoja klinika</h1>
@@ -45,16 +46,16 @@
         </div>
         <br>
 
-        <a th:href="@{/clinic/employees/{id}(id=${clinic.id})}">Pracownicy</a><br>
+        <a th:href="@{/clinic/employees/{id}(id=${clinic.id})}">Zarządzaj pracownikami</a><br>
 
-        <label>Specjalizacje:</label>
-        <div th:each="specialization : ${specializations}">
-            <input type="checkbox"
-                   th:value="${specialization}"
-                   th:field="*{clinic.specializations}"
-                   th:checked="${clinic.specializations.contains(specialization)}"/>
-            <span th:text="${specialization.getName()}"></span>
-        </div>
+        <h2>Specjalizacje:</h2>
+        <select name="clinic.specializations" th:field="*{clinic.specializations}" multiple>
+            <option th:each="specialization : ${specializations}"
+                    th:value="${specialization}"
+                    th:text="${specialization.getName()}"
+                    th:checked="${clinic.specializations.contains(specialization)}">
+            </option>
+        </select>
         <br>
 
         <input type="submit" value="Zapisz i wyjdź">
