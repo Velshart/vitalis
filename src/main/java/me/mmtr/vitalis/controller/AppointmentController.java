@@ -7,7 +7,6 @@ import me.mmtr.vitalis.data.enums.Specialization;
 import me.mmtr.vitalis.repository.UserRepository;
 import me.mmtr.vitalis.service.interfaces.AppointmentService;
 import me.mmtr.vitalis.service.interfaces.ClinicService;
-import me.mmtr.vitalis.service.interfaces.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,14 +28,12 @@ public class AppointmentController {
     private final AppointmentService appointmentService;
     private final UserRepository userRepository;
     private final ClinicService clinicService;
-    private final UserService userService;
 
     public AppointmentController(AppointmentService appointmentService,
-                                 UserRepository userRepository, ClinicService clinicService, UserService userService) {
+                                 UserRepository userRepository, ClinicService clinicService) {
         this.appointmentService = appointmentService;
         this.userRepository = userRepository;
         this.clinicService = clinicService;
-        this.userService = userService;
     }
 
     @GetMapping("/choose-clinic")
