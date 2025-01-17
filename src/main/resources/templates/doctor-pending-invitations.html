@@ -11,7 +11,14 @@
     <div>
         <div th:text="${pendingInvitation.clinic.name}"></div>
         <div th:text="${pendingInvitation.status.getStatus()}"></div>
-        <a th:href="@{/doctor/invitation-doctor-view/{id}(id=${pendingInvitation.id})}"> Więcej informacji </a>
+        <form method="post" th:action="@{/doctor/invitation-accept/{id}(id=${pendingInvitation.id})}">
+            <input type="submit" value="Zatwierdź"/>
+        </form><br>
+
+        <form method="post" th:action="@{/doctor/invitation-deny/{id}(id=${pendingInvitation.id})}">
+            <input type="submit" value="Odrzuć">
+        </form><br>
+
     </div>
 </div>
 <br>

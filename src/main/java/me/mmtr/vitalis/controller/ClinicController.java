@@ -145,6 +145,7 @@ public class ClinicController {
         model.addAttribute("employees", clinic.getEmployees());
         model.addAttribute("others", getUnemployedDoctors(USER_REPOSITORY.findAll(), clinic.getId(), principal));
         model.addAttribute("invitation", invitation);
+        model.addAttribute("pendingInvitations", getPendingInvitations(clinic.getId()));
 
         return "clinic-employees";
     }
@@ -207,6 +208,14 @@ public class ClinicController {
                                 && invitation.getClinic().equals(clinic)
                                 && invitation.getStatus().equals(InvitationStatus.PENDING)))
                 .collect(Collectors.toList());
+    }
+
+    private List<Invitation> getPendingInvitations(Long clinicId) {
+
+        return INVITATION_SERVICE.getAll().stream()
+                .filter(invitation -> invitation.getStatus().equals(InvitationStatus.PENDING))
+                .filter(invitation -> invitation.getClinic().getId().equals(clinicId))
+                .toList();
     }
 }
 

@@ -95,14 +95,30 @@ public class DoctorHomeController {
         return "appointment-doctor-view";
     }
 
-    @GetMapping("/invitation-doctor-view/{id}")
-    public String invitationDoctorView(@PathVariable Long id, Model model) {
-        model.addAttribute("invitation", invitationService.getById(id).orElseThrow());
-        model.addAttribute("statuses", Arrays.stream(InvitationStatus.values())
-                .filter(status -> status != InvitationStatus.PENDING));
+//    @GetMapping("/invitation-doctor-view/{id}")
+//    public String invitationDoctorView(@PathVariable Long id, Model model) {
+//        model.addAttribute("invitation", invitationService.getById(id).orElseThrow());
+//        model.addAttribute("statuses", Arrays.stream(InvitationStatus.values())
+//                .filter(status -> status != InvitationStatus.PENDING));
+//
+//        return "invitation-doctor-view";
+//    }
 
-        return "invitation-doctor-view";
-    }
+    //    @PostMapping("/invitation-doctor-view/{id}")
+//    public String invitationDoctorViewSubmit(@RequestParam(name = "invitationStatus") InvitationStatus invitationStatus,
+//                                              @PathVariable Long id) {
+//
+//        if (invitationStatus == InvitationStatus.ACCEPT) {
+//            Invitation invitation = invitationService.getById(id).orElseThrow();
+//            invitation.setStatus(invitationStatus);
+//            invitationService.saveInvitation(invitation);
+//            clinicService.addEmployeeToClinic(invitation.getClinic().getId(), invitation.getDoctor().getId());
+//        }
+//        else {
+//            invitationService.delete(id);
+//        }
+//        return "redirect:/doctor/home";
+//    }
 
     @PostMapping("/appointment-doctor-view/{id}")
     public String appointmentDoctorViewSubmit(@RequestParam(name = "appointmentStatus") AppointmentStatus appointmentStatus,
@@ -117,20 +133,26 @@ public class DoctorHomeController {
         return "redirect:/doctor/home";
     }
 
-    @PostMapping("/invitation-doctor-view/{id}")
-    public String invitationDoctorViewSubmit(@RequestParam(name = "invitationStatus") InvitationStatus invitationStatus,
-                                              @PathVariable Long id) {
+    @PostMapping("/invitation-accept/{id}")
+    public String invitationAccept(@PathVariable Long id) {
+        Invitation invitation = invitationService.getById(id).orElseThrow();
 
-        if (invitationStatus == InvitationStatus.ACCEPT) {
-            Invitation invitation = invitationService.getById(id).orElseThrow();
-            invitation.setStatus(invitationStatus);
-            invitationService.saveInvitation(invitation);
-            clinicService.addEmployeeToClinic(invitation.getClinic().getId(), invitation.getDoctor().getId());
-        }
-        else {
-            invitationService.delete(id);
-        }
-        return "redirect:/doctor/home";
+        invitationService.delete(id);
+        clinicService.addEmployeeToClinic(invitation.getClinic().getId(), invitation.getDoctor().getId());
+
+        return "redirect:/doctor/pending-invitations";
+    }
+
+    @PostMapping("/invitation-deny/{id}")
+    public String invitationDeny(@PathVariable Long id) {
+        invitationService.delete(id);
+        return "redirect:/doctor/pending-invitations";
+    }
+
+    @PostMapping("/invitation-cancel/{id}")
+    public String invitationCancel(@PathVariable Long id, @RequestParam Long clinicId) {
+        invitationService.delete(id);
+        return "redirect:/clinic/employees/" + clinicId;
     }
 
     private List<Appointment> getAppointments(Principal principal, AppointmentStatus status) {
