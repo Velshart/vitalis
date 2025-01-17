@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Twoje specjalizacje</title>
+</head>
+<body>
+
+<form method="post">
+    <h2>Wybierz swoje specjalizacje:</h2>
+    <select th:field="*{doctor.specializations}" multiple>
+        <option th:each="specialization : ${specializations}"
+                th:value="${specialization}"
+                th:text="${specialization.name}"
+                th:checked="${doctor.specializations.contains(specialization)}">
+        </option>
+    </select>
+    <br>
+
+    <button type="submit">Zapisz</button>
+</form>
+
+</body>
+</html>

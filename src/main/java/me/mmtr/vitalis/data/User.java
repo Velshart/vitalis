@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import me.mmtr.vitalis.data.enums.Specialization;
 
 import java.util.*;
 
@@ -34,6 +35,11 @@ public class User {
     @ManyToMany(mappedBy = "employees")
     @EqualsAndHashCode.Exclude
     private Set<Clinic> clinics = new HashSet<>();
+
+    @ElementCollection(targetClass = Specialization.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "doctor_specializations", joinColumns = @JoinColumn(name = "doctor_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Specialization> specializations = new HashSet<>();
 
     @Override
     public int hashCode() {
