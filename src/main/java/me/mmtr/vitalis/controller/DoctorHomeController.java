@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -70,7 +71,9 @@ public class DoctorHomeController {
 
     @GetMapping("/home")
     public String doctor(Principal principal, Model model) {
-        model.addAttribute("scheduledAppointments", getAppointments(principal, AppointmentStatus.SCHEDULED));
+        model.addAttribute("scheduledAppointments", getAppointments(principal, AppointmentStatus.SCHEDULED)
+                .stream()
+                .sorted(Comparator.comparing(Appointment::getDate).thenComparing(Appointment::getTime)).toList());
         return "doctor-home";
     }
 
@@ -90,7 +93,7 @@ public class DoctorHomeController {
     public String appointmentDoctorView(@PathVariable Long id, Model model) {
         model.addAttribute("appointment", appointmentService.findById(id).orElseThrow());
         model.addAttribute("statuses", Arrays.stream(AppointmentStatus.values())
-                .filter(status -> status != AppointmentStatus.PENDING));
+                .filter(status -> status != AppointmentStatus.PENDING && status != AppointmentStatus.EXPIRED));
 
         return "appointment-doctor-view";
     }
