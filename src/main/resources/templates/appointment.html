@@ -18,7 +18,7 @@
 
             if (exists) {
                 document.getElementById('error').innerText = 'Wizyta na tę datę i godzinę do tego lekarza już istnieje.';
-                return false; // Prevent form submission
+                return false;
             }
 
             document.getElementById('error').innerText = '';
@@ -44,9 +44,12 @@
 
         <label for="doctorId">Lekarz:</label>
         <select id="doctorId" name="doctorId" required onchange="checkAppointmentExists()">
-            <option value="" disabled selected>Wybierz Lekarza</option>
-            <option th:each="doctor : ${doctors}" th:value="${doctor.id}" th:text="${doctor.username}"></option>
-        </select><br>
+                <option value="" disabled selected>Wybierz Lekarza</option>
+                <option th:each="doctor : ${doctors}"
+                        th:value="${doctor.id}"
+                        th:text="${doctor.username + ' - ' + doctorSpecializations.get(doctor.username)}">
+                </option>
+            </select><br>
 
         <div>
             <label for="date">Data:</label>
@@ -67,7 +70,7 @@
         <br>
 
         <input type="submit" value="Zatwierdź">
-    </form>
+    </form><br>
 
     <form th:action="@{/patient/home}" method="get">
         <button type="submit">Anuluj</button>

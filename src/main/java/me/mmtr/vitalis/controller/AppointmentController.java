@@ -3,6 +3,7 @@ package me.mmtr.vitalis.controller;
 import me.mmtr.vitalis.data.Appointment;
 import me.mmtr.vitalis.data.Clinic;
 import me.mmtr.vitalis.data.User;
+import me.mmtr.vitalis.data.enums.Specialization;
 import me.mmtr.vitalis.repository.UserRepository;
 import me.mmtr.vitalis.service.interfaces.AppointmentService;
 import me.mmtr.vitalis.service.interfaces.ClinicService;
@@ -14,8 +15,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/appointment")
@@ -34,8 +38,20 @@ public class AppointmentController {
 
     @GetMapping("/choose-clinic")
     public String addAppointment(@ModelAttribute Appointment appointment, Model model) {
+        List<Clinic> clinics = clinicService.getAll();
+        Map<String, String> clinicSpecializations = new HashMap<>();
+
+        for (Clinic clinic : clinics) {
+            String specializations = clinic.getSpecializations().stream()
+                    .map(Specialization::getName)
+                    .collect(Collectors.joining(", "));
+
+            clinicSpecializations.put(clinic.getName(), specializations);
+        }
+
         model.addAttribute("appointment", appointment);
-        model.addAttribute("clinics", clinicService.getAll());
+        model.addAttribute("clinics", clinics);
+        model.addAttribute("clinicSpecializations", clinicSpecializations);
         return "appointment-clinic-choose";
     }
 
@@ -66,9 +82,19 @@ public class AppointmentController {
                         appointment.getClinic().getOwner().equals(user)))
                 .toList();
 
+        Map<String, String> doctorSpecializations = new HashMap<>();
+
+        for (User doctor : doctors) {
+            String specializations = doctor.getSpecializations().stream()
+                    .map(Specialization::getName)
+                    .collect(Collectors.joining(", "));
+            doctorSpecializations.put(doctor.getUsername(), specializations);
+        }
+
         model.addAttribute("appointment", appointment);
         model.addAttribute("doctors", doctors);
         model.addAttribute("currentDate", LocalDate.now());
+        model.addAttribute("doctorSpecializations", doctorSpecializations);
         return "appointment";
     }
 
