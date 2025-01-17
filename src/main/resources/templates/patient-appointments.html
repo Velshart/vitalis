@@ -13,10 +13,18 @@
         <div th:text="${scheduledAppointment.clinic.name}"></div>
         <div th:text="${scheduledAppointment.date + ' godz. ' + scheduledAppointment.time}"></div>
         <div th:text="${'Status: ' + scheduledAppointment.status.getStatus()}"></div>
+        <div th:if="${scheduledAppointment.comment}"
+                th:text="${'Komentarz pacjenta: ' + scheduledAppointment.comment}"></div>
         <div th:if="${scheduledAppointment.reasonForChange}"
              th:text="${'Komentarz lekarza: ' + scheduledAppointment.reasonForChange}"></div>
-        <br>
-        <a th:href="@{/patient/appointment-patient-view/{id}(id=${scheduledAppointment.id})}">Szczegóły</a>
+        <div>
+            <a th:href="'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=' +
+             ${scheduledAppointment.getClinic().street} +
+              ',' + ${scheduledAppointment.getClinic().getBuildingNumber()}">
+                Pokaż trasę do kliniki
+            </a>
+        </div>
+
         <div>
             <a th:href="@{/appointment/confirm-delete/{appointmentId}(appointmentId=${scheduledAppointment.id})}">Odwołaj</a>
         </div>
@@ -31,7 +39,17 @@
         <div th:text="${pendingAppointment.clinic.name}"></div>
         <div th:text="${pendingAppointment.date + ' godz. ' + pendingAppointment.time}"></div>
         <div th:text="${'Status: ' + pendingAppointment.status.getStatus()}"></div>
+        <div th:if="${pendingAppointment.comment}"
+             th:text="${'Komentarz pacjenta: ' + pendingAppointment.comment}"></div>
         <a th:href="@{/patient/appointment-patient-view/{id}(id=${pendingAppointment.id})}">Szczegóły</a>
+        <div>
+            <a th:href="'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=' +
+             ${pendingAppointment.getClinic().street} +
+              ',' + ${pendingAppointment.getClinic().getBuildingNumber()}">
+                Pokaż trasę do kliniki
+            </a>
+        </div>
+
         <div>
             <a th:href="@{/appointment/confirm-delete/{appointmentId}(appointmentId=${pendingAppointment.id})}">Odwołaj</a>
         </div>
@@ -41,16 +59,15 @@
 
 <h1>Pozostałe wizyty</h1>
 <div th:each="otherAppointment : ${otherAppointments}">
-    <div>
         <div th:text="${otherAppointment.doctor.username}"></div>
         <div th:text="${otherAppointment.clinic.name}"></div>
         <div th:text="${'Status: ' + otherAppointment.status.getStatus()}"></div>
         <div th:text="${'Powód: ' + otherAppointment.reasonForChange}"></div>
+        <a th:href="@{/patient/appointment-patient-view/{id}(id=${otherAppointment.id})}">Szczegóły</a>
         <div>
-            <a th:href="@{/appointment/confirm-delete/{appointmentId}(appointmentId=${otherAppointment.id})}">Odwołaj</a>
+            <a th:href="@{/appointment/confirm-delete/{appointmentId}(appointmentId=${otherAppointment.id})}">Usuń</a>
         </div>
     </div>
-</div>
 <br>
 
 <form th:action="@{/patient/home}" method="get">
