@@ -1,11 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Twoje wizyty</title>
-    <link rel="stylesheet" href="/css/wizyta.css">
+    <link rel="stylesheet" href="/css/panel.css">
     <link rel="icon" type="image/x-icon" href="/css/favicon.ico">
+
 </head>
 <body>
 <header>
@@ -42,7 +42,7 @@
                     </a>
                 </div>
                 <div>
-                    <a th:href="@{/appointment/confirm-delete/{appointmentId}(appointmentId=${scheduledAppointment.id})}">Odwołaj</a>
+                    <a href="#" class="cancel-appointment" data-id="${scheduledAppointment.id}">Odwołaj</a>
                 </div>
             </div>
         </div>
@@ -61,12 +61,12 @@
                 <div>
                     <a th:href="'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=' +
                      ${pendingAppointment.getClinic().street} +
-                      ',' + ${pendingAppointment.getClinic().getBuildingNumber()}">
+                      ',' + ${pendingAppointment.getClinic().getBuildingNumber()}" target="_blank">
                         Pokaż trasę do kliniki
                     </a>
                 </div>
                 <div>
-                    <a th:href="@{/appointment/confirm-delete/{appointmentId}(appointmentId=${pendingAppointment.id})}">Odwołaj</a>
+                    <a href="#" class="cancel-appointment" data-id="${pendingAppointment.id}">Odwołaj</a>
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@
                 <div th:text="${'Powód: ' + otherAppointment.reasonForChange}"></div>
                 <a th:href="@{/patient/appointment-patient-view/{id}(id=${otherAppointment.id})}">Szczegóły</a>
                 <div>
-                    <a th:href="@{/appointment/confirm-delete/{appointmentId}(appointmentId=${otherAppointment.id})}">Usuń</a>
+                    <a href="#" class="cancel-appointment" data-id="${otherAppointment.id}">Usuń</a>
                 </div>
             </div>
         </div>
@@ -91,8 +91,21 @@
             <button type="submit">Wróć</button>
         </form>
     </div>
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h1>Czy na pewno chcesz usunąć wizytę?</h1>
+            <form method="post" th:action="@{/appointment/delete}">
+                <input type="hidden" name="id" id="appointmentId">
+                <button type="submit">Tak</button>
+            </form>
+            <button id="cancelButton">Nie</button>
+        </div>
+    </div>
 </div>
+
+
+
+<script src="/css/modal.js"></script>
 </body>
 </html>
-
-
