@@ -87,7 +87,7 @@ h1 {
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #f0f0f0; /* Set the background color of the form to gray */
+    background-color: #f0f0f0;
     width: 100%;
     max-width: 600px;
 }
@@ -106,13 +106,13 @@ select, input, textarea, button {
 }
 
 textarea {
-    resize: vertical; /* Allow vertical resizing */
+    resize: vertical;
 }
 
 button {
-    width: 100%; /* Dodaj ten styl, aby przyciski były na całą szerokość */
+    width: 100%;
     padding: 10px 20px;
-    background-color: #0c3761; /* Set the button background color to blue */
+    background-color: #0c3761;
     color: white;
     border: none;
     border-radius: 5px;
@@ -120,7 +120,7 @@ button {
 }
 
 button:hover {
-    background-color: #0d4276; /* Darken the button color on hover */
+    background-color: #0d4276;
 }
 
 button[type="submit"] {
