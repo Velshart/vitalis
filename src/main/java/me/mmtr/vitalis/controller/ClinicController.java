@@ -166,6 +166,7 @@ public class ClinicController {
     public String delete(@RequestParam Long id) {
         this.CLINIC_SERVICE.delete(id);
         return "redirect:/doctor/owned-clinics";
+
     }
 
     private void updateEmployeeList(@ModelAttribute Invitation invitation,
