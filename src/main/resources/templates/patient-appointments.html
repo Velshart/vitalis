@@ -1,78 +1,98 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Twoje wizyty</title>
+    <link rel="stylesheet" href="/css/wizyta.css">
+    <link rel="icon" type="image/x-icon" href="/css/favicon.ico">
 </head>
 <body>
-
-<h1>Zatwierdzone wizyty</h1>
-<div th:each="scheduledAppointment : ${scheduledAppointments}">
-    <div>
-        <div th:text="${scheduledAppointment.doctor.username}"></div>
-        <div th:text="${scheduledAppointment.clinic.name}"></div>
-        <div th:text="${scheduledAppointment.date + ' godz. ' + scheduledAppointment.time}"></div>
-        <div th:text="${'Status: ' + scheduledAppointment.status.getStatus()}"></div>
-        <div th:if="${scheduledAppointment.comment}"
-                th:text="${'Komentarz pacjenta: ' + scheduledAppointment.comment}"></div>
-        <div th:if="${scheduledAppointment.reasonForChange}"
-             th:text="${'Komentarz lekarza: ' + scheduledAppointment.reasonForChange}"></div>
-        <div>
-            <a th:href="'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=' +
-             ${scheduledAppointment.getClinic().street} +
-              ',' + ${scheduledAppointment.getClinic().getBuildingNumber()}">
-                Pokaż trasę do kliniki
-            </a>
+<header>
+    <div class="logo">
+        <img src="/img/logo.png" alt="Logo">
+    </div>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+<div class="main-content">
+    <div class="container">
+        <h1>Zatwierdzone wizyty</h1>
+        <div class="form-container" th:each="scheduledAppointment : ${scheduledAppointments}">
+            <div>
+                <div th:text="${scheduledAppointment.doctor.username}"></div>
+                <div th:text="${scheduledAppointment.clinic.name}"></div>
+                <div th:text="${scheduledAppointment.date + ' godz. ' + scheduledAppointment.time}"></div>
+                <div th:text="${'Status: ' + scheduledAppointment.status.getStatus()}"></div>
+                <div th:if="${scheduledAppointment.comment}"
+                     th:text="${'Komentarz pacjenta: ' + scheduledAppointment.comment}"></div>
+                <div th:if="${scheduledAppointment.reasonForChange}"
+                     th:text="${'Komentarz lekarza: ' + scheduledAppointment.reasonForChange}"></div>
+                <div>
+                    <a th:href="'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=' +
+                     ${scheduledAppointment.getClinic().street} +
+                      ',' + ${scheduledAppointment.getClinic().getBuildingNumber()}">
+                        Pokaż trasę do kliniki
+                    </a>
+                </div>
+                <div>
+                    <a th:href="@{/appointment/confirm-delete/{appointmentId}(appointmentId=${scheduledAppointment.id})}">Odwołaj</a>
+                </div>
+            </div>
         </div>
+        <br>
 
-        <div>
-            <a th:href="@{/appointment/confirm-delete/{appointmentId}(appointmentId=${scheduledAppointment.id})}">Odwołaj</a>
+        <h1>Oczekujące wizyty</h1>
+        <div class="form-container" th:each="pendingAppointment : ${pendingAppointments}">
+            <div>
+                <div th:text="${pendingAppointment.doctor.username}"></div>
+                <div th:text="${pendingAppointment.clinic.name}"></div>
+                <div th:text="${pendingAppointment.date + ' godz. ' + pendingAppointment.time}"></div>
+                <div th:text="${'Status: ' + pendingAppointment.status.getStatus()}"></div>
+                <div th:if="${pendingAppointment.comment}"
+                     th:text="${'Komentarz pacjenta: ' + pendingAppointment.comment}"></div>
+                <a th:href="@{/patient/appointment-patient-view/{id}(id=${pendingAppointment.id})}">Szczegóły</a>
+                <div>
+                    <a th:href="'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=' +
+                     ${pendingAppointment.getClinic().street} +
+                      ',' + ${pendingAppointment.getClinic().getBuildingNumber()}">
+                        Pokaż trasę do kliniki
+                    </a>
+                </div>
+                <div>
+                    <a th:href="@{/appointment/confirm-delete/{appointmentId}(appointmentId=${pendingAppointment.id})}">Odwołaj</a>
+                </div>
+            </div>
         </div>
+        <br>
+
+        <h1>Pozostałe wizyty</h1>
+        <div class="form-container" th:each="otherAppointment : ${otherAppointments}">
+            <div>
+                <div th:text="${otherAppointment.doctor.username}"></div>
+                <div th:text="${otherAppointment.clinic.name}"></div>
+                <div th:text="${'Status: ' + otherAppointment.status.getStatus()}"></div>
+                <div th:text="${'Powód: ' + otherAppointment.reasonForChange}"></div>
+                <a th:href="@{/patient/appointment-patient-view/{id}(id=${otherAppointment.id})}">Szczegóły</a>
+                <div>
+                    <a th:href="@{/appointment/confirm-delete/{appointmentId}(appointmentId=${otherAppointment.id})}">Usuń</a>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <form th:action="@{/patient/home}" method="get">
+            <button type="submit">Wróć</button>
+        </form>
     </div>
 </div>
-<br>
-
-<h1>Oczekujące wizyty</h1>
-<div th:each="pendingAppointment : ${pendingAppointments}">
-    <div>
-        <div th:text="${pendingAppointment.doctor.username}"></div>
-        <div th:text="${pendingAppointment.clinic.name}"></div>
-        <div th:text="${pendingAppointment.date + ' godz. ' + pendingAppointment.time}"></div>
-        <div th:text="${'Status: ' + pendingAppointment.status.getStatus()}"></div>
-        <div th:if="${pendingAppointment.comment}"
-             th:text="${'Komentarz pacjenta: ' + pendingAppointment.comment}"></div>
-        <a th:href="@{/patient/appointment-patient-view/{id}(id=${pendingAppointment.id})}">Szczegóły</a>
-        <div>
-            <a th:href="'https://www.google.com/maps/dir/?api=1&origin=My+Location&destination=' +
-             ${pendingAppointment.getClinic().street} +
-              ',' + ${pendingAppointment.getClinic().getBuildingNumber()}">
-                Pokaż trasę do kliniki
-            </a>
-        </div>
-
-        <div>
-            <a th:href="@{/appointment/confirm-delete/{appointmentId}(appointmentId=${pendingAppointment.id})}">Odwołaj</a>
-        </div>
-    </div>
-</div>
-<br>
-
-<h1>Pozostałe wizyty</h1>
-<div th:each="otherAppointment : ${otherAppointments}">
-        <div th:text="${otherAppointment.doctor.username}"></div>
-        <div th:text="${otherAppointment.clinic.name}"></div>
-        <div th:text="${'Status: ' + otherAppointment.status.getStatus()}"></div>
-        <div th:text="${'Powód: ' + otherAppointment.reasonForChange}"></div>
-        <a th:href="@{/patient/appointment-patient-view/{id}(id=${otherAppointment.id})}">Szczegóły</a>
-        <div>
-            <a th:href="@{/appointment/confirm-delete/{appointmentId}(appointmentId=${otherAppointment.id})}">Usuń</a>
-        </div>
-    </div>
-<br>
-
-<form th:action="@{/patient/home}" method="get">
-    <button type="submit">Wróć</button>
-</form>
-
 </body>
 </html>
+
+

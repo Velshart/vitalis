@@ -48,3 +48,13 @@ input[type="checkbox"] {
     display: flex;
     align-items: center; /* Center vertically */
 }
+.error-message {
+    color: red;
+    text-align: center;
+    background-color: #ffe6e6;
+    padding: 10px;
+    border: 1px solid red;
+    border-radius: 5px;
+    width: 95%;
+    margin-top: 10px;
+}
