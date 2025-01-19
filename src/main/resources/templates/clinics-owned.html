@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/wizyta.css">
+    <link rel="stylesheet" href="/css/modal.css">
     <link rel="icon" type="image/x-icon" href="/css/favicon.ico">
     <title>Title</title>
 </head>
@@ -11,37 +12,41 @@
     <div class="logo">
         <img src="/img/logo.png" alt="Logo">
     </div>
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+
 </header>
 <div class="main-content">
     <div class="container">
-<h2>Twoje kliniki</h2><br>
+        <h2>Twoje kliniki</h2><br>
         <div class="form-container">
-<div th:each="clinic : ${clinicsOwned}">
-    <div>
-        <div th:text="${clinic.name}"></div>
-        <a th:href="@{/clinic/update/{id}(id=${clinic.id})}">Szczegóły</a>
+            <div th:each="clinic : ${clinicsOwned}">
+                <div>
+                    <div th:text="${clinic.name}"></div>
+                    <a th:href="@{/clinic/update/{id}(id=${clinic.id})}">Szczegóły</a>
 
-        <form method="get" th:action="@{/clinic/confirm-delete}">
-            <input type="hidden" name="clinicId" th:value="${clinic.id}">
-            <input type="submit" value="Usuń">
-        </form>
-    </div>
-</div>
-<br>
+                    <button class="delete-clinic" th:data-id="${clinic.id}">Usuń</button>
+                </div>
+                <div id="deleteModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h1>Czy na pewno chcesz usunąć klinikę?</h1>
+                        <form method="post" th:action="@{/clinic/delete}">
+                            <input type="hidden" name="id" id="clinicId">
+                            <button type="submit">Tak</button>
+                        </form>
+                        <button id="cancelButton">Nie</button>
+                    </div>
+                </div>
+            </div>
+            <br>
 
-<form th:action="@{/doctor/home}" method="get">
-    <button type="submit">Wróć</button>
-</form>
+            <form th:action="@{/doctor/home}" method="get">
+                <button type="submit">Wróć</button>
+            </form>
         </div>
     </div>
 </div>
+
+
+<script src="/css/clinicDelete.js"></script>
 </body>
 </html>
