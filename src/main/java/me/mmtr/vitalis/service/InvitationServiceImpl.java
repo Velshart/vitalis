@@ -3,8 +3,8 @@ package me.mmtr.vitalis.service;
 
 import jakarta.transaction.Transactional;
 import me.mmtr.vitalis.data.Invitation;
-import me.mmtr.vitalis.data.enums.InvitationStatus;
 import me.mmtr.vitalis.repository.dao.interfaces.IInvitationDAO;
+import me.mmtr.vitalis.service.interfaces.ClinicService;
 import me.mmtr.vitalis.service.interfaces.InvitationService;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +42,18 @@ public class InvitationServiceImpl implements InvitationService {
     @Transactional
     public void delete(Long id) {
         INVITATION_DAO.delete(id);
+    }
+
+    //TODO: New code that needs to be tested
+    @Override
+    @Transactional
+    public void deleteByClinicId(Long clinicId) {
+        List<Invitation> invitationsToDelete = INVITATION_DAO.getAll()
+                .stream()
+                .filter(invitation -> invitation.getClinic().getId().equals(clinicId))
+                .toList();
+
+        invitationsToDelete.forEach(invitation -> delete(invitation.getId()));
     }
 
     @Override

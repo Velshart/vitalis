@@ -13,5 +13,7 @@ public interface InvitationService {
 
     void delete(Long id);
 
+    void deleteByClinicId(Long clinicId);
+
     void saveInvitation(Invitation invitation);
 }

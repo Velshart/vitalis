@@ -164,6 +164,8 @@ public class ClinicController {
 
     @PostMapping("/delete")
     public String delete(@RequestParam Long id) {
+        //TODO: New code that needs to be tested
+        this.INVITATION_SERVICE.deleteByClinicId(id);
         this.CLINIC_SERVICE.delete(id);
         return "redirect:/doctor/owned-clinics";
 
