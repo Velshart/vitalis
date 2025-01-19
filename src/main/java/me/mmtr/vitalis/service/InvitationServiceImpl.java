@@ -44,7 +44,6 @@ public class InvitationServiceImpl implements InvitationService {
         INVITATION_DAO.delete(id);
     }
 
-    //TODO: New code that needs to be tested
     @Override
     @Transactional
     public void deleteByClinicId(Long clinicId) {
