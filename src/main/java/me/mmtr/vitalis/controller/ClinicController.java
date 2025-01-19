@@ -140,6 +140,19 @@ public class ClinicController {
         return "redirect:/clinic/employees/" + clinicId;
     }
 
+    //TODO: Test code
+    @PostMapping("/employee/remove/{employeeId}")
+    public String removeEmployeeFromClinic(
+                                 @PathVariable Long employeeId,
+                                 @RequestParam Long clinicId,
+                                 Principal principal,
+                                 RedirectAttributes redirectAttributes) {
+
+        updateEmployeeListt(clinicId, employeeId, redirectAttributes, principal);
+
+        return "redirect:/clinic/employees/" + clinicId;
+    }
+
     @GetMapping("/employees/{id}")
     public String showEmployees(@ModelAttribute Invitation invitation,
                                 @PathVariable Long id,
@@ -192,6 +205,23 @@ public class ClinicController {
         }
         addRedirectAttributes(redirectAttributes, clinicId, principal);
     }
+
+    //TODO: Test code
+    private void updateEmployeeListt(Long clinicId,
+                                    Long employeeId,
+                                    RedirectAttributes redirectAttributes,
+                                    Principal principal) {
+
+        Clinic clinic = CLINIC_SERVICE.getById(clinicId).orElseThrow(() ->
+                new RuntimeException("Clinic not found with id: " + clinicId));
+        User user = USER_REPOSITORY.findById(employeeId).orElseThrow(() ->
+                new RuntimeException("User not found with id: " + employeeId));
+
+            CLINIC_SERVICE.removeEmployeeFromClinic(clinicId, employeeId);
+
+        addRedirectAttributes(redirectAttributes, clinicId, principal);
+    }
+
 
 
     private void addRedirectAttributes(RedirectAttributes redirectAttributes, Long clinicId, Principal principal) {
