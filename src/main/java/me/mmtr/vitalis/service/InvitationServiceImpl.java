@@ -4,7 +4,6 @@ package me.mmtr.vitalis.service;
 import jakarta.transaction.Transactional;
 import me.mmtr.vitalis.data.Invitation;
 import me.mmtr.vitalis.repository.dao.interfaces.IInvitationDAO;
-import me.mmtr.vitalis.service.interfaces.ClinicService;
 import me.mmtr.vitalis.service.interfaces.InvitationService;
 import org.springframework.stereotype.Service;
 
@@ -14,40 +13,40 @@ import java.util.Optional;
 @Service
 public class InvitationServiceImpl implements InvitationService {
 
-    private final IInvitationDAO INVITATION_DAO;
+    private final IInvitationDAO invitationDAO;
 
     public InvitationServiceImpl(IInvitationDAO invitationDAO) {
-        this.INVITATION_DAO = invitationDAO;
+        this.invitationDAO = invitationDAO;
     }
 
     @Override
     @Transactional
     public void saveOrUpdate(Invitation invitation) {
-        INVITATION_DAO.saveOrUpdate(invitation);
+        invitationDAO.saveOrUpdate(invitation);
     }
 
     @Override
     @Transactional
     public Optional<Invitation> getById(Long id) {
-        return INVITATION_DAO.getById(id);
+        return invitationDAO.getById(id);
     }
 
     @Override
     @Transactional
     public List<Invitation> getAll() {
-        return INVITATION_DAO.getAll();
+        return invitationDAO.getAll();
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        INVITATION_DAO.delete(id);
+        invitationDAO.delete(id);
     }
 
     @Override
     @Transactional
     public void deleteByClinicId(Long clinicId) {
-        List<Invitation> invitationsToDelete = INVITATION_DAO.getAll()
+        List<Invitation> invitationsToDelete = invitationDAO.getAll()
                 .stream()
                 .filter(invitation -> invitation.getClinic().getId().equals(clinicId))
                 .toList();
@@ -58,6 +57,6 @@ public class InvitationServiceImpl implements InvitationService {
     @Override
     @Transactional
     public void saveInvitation(Invitation invitation) {
-        INVITATION_DAO.saveOrUpdate(invitation);
+        invitationDAO.saveOrUpdate(invitation);
     }
 }

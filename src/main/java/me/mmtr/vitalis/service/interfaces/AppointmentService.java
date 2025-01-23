@@ -20,5 +20,7 @@ public interface AppointmentService {
 
     List<Appointment> getAll();
 
+    void deleteByClinicId(Long clinicId);
+
     void delete(Long id);
 }
