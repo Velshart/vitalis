@@ -18,6 +18,7 @@ public class ClinicDAO implements IClinicDAO {
 
     private final String GET_ALL_JPQL = "FROM me.mmtr.vitalis.data.Clinic";
     private final String GET_BY_ID_JPQL = "SELECT c FROM me.mmtr.vitalis.data.Clinic c WHERE c.id = :id";
+
     @PersistenceContext
     private EntityManager entityManager;
 

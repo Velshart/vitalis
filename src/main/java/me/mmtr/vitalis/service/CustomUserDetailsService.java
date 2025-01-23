@@ -15,16 +15,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    private final UserRepository USER_REPOSITORY;
+    private final UserRepository userRepository;
 
     public CustomUserDetailsService(UserRepository userRepository) {
-        this.USER_REPOSITORY = userRepository;
+        this.userRepository = userRepository;
     }
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = USER_REPOSITORY.findByUsername(username);
+        User user = userRepository.findByUsername(username);
 
         if (user != null) {
             return new org.springframework.security.core.userdetails.User(user.getUsername(),

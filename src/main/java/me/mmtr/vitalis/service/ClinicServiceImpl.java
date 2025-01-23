@@ -15,62 +15,62 @@ import java.util.Optional;
 @Transactional
 public class ClinicServiceImpl implements ClinicService {
 
-    private final IClinicDAO CLINIC_DAO;
-    private final UserRepository USER_REPOSITORY;
+    private final IClinicDAO clinicDAO;
+    private final UserRepository userRepository;
 
     public ClinicServiceImpl(IClinicDAO clinicDAO, UserRepository USER_REPOSITORY) {
-        this.CLINIC_DAO = clinicDAO;
-        this.USER_REPOSITORY = USER_REPOSITORY;
+        this.clinicDAO = clinicDAO;
+        this.userRepository = USER_REPOSITORY;
     }
 
     @Override
     @Transactional
     public void saveOrUpdate(Clinic clinic) {
-        CLINIC_DAO.saveOrUpdate(clinic);
+        clinicDAO.saveOrUpdate(clinic);
     }
 
     @Override
     @Transactional
     public Optional<Clinic> getById(Long id) {
-        return CLINIC_DAO.getById(id);
+        return clinicDAO.getById(id);
     }
 
     @Override
     public void addEmployeeToClinic(Long clinicId, Long employeeId) {
-        Clinic clinic = CLINIC_DAO.getById(clinicId).orElseThrow(() ->
+        Clinic clinic = clinicDAO.getById(clinicId).orElseThrow(() ->
                 new RuntimeException("Clinic not found"));
 
-        User user = USER_REPOSITORY.findById(employeeId).orElseThrow(() ->
+        User user = userRepository.findById(employeeId).orElseThrow(() ->
                 new RuntimeException("User not found"));
 
         clinic.addEmployee(user);
-        CLINIC_DAO.saveOrUpdate(clinic);
-        USER_REPOSITORY.save(user);
+        clinicDAO.saveOrUpdate(clinic);
+        userRepository.save(user);
     }
 
     @Override
     public void removeEmployeeFromClinic(Long clinicId, Long employeeId) {
-        Clinic clinic = CLINIC_DAO.getById(clinicId).orElseThrow(() ->
+        Clinic clinic = clinicDAO.getById(clinicId).orElseThrow(() ->
                 new RuntimeException("Clinic not found"));
 
-        User user = USER_REPOSITORY.findById(employeeId).orElseThrow(() ->
+        User user = userRepository.findById(employeeId).orElseThrow(() ->
                 new RuntimeException("User not found"));
 
         clinic.removeEmployee(user);
-        CLINIC_DAO.saveOrUpdate(clinic);
-        USER_REPOSITORY.save(user);
+        clinicDAO.saveOrUpdate(clinic);
+        userRepository.save(user);
     }
 
 
     @Override
     @Transactional
     public List<Clinic> getAll() {
-        return CLINIC_DAO.getAll();
+        return clinicDAO.getAll();
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        CLINIC_DAO.delete(id);
+        clinicDAO.delete(id);
     }
 }

@@ -14,32 +14,32 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository USER_REPOSITORY;
-    private final RoleRepository ROLE_REPOSITORY;
-    private final PasswordEncoder PASSWORD_ENCODER;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
                            PasswordEncoder passwordEncoder) {
-        this.USER_REPOSITORY = userRepository;
-        this.ROLE_REPOSITORY = roleRepository;
-        this.PASSWORD_ENCODER = passwordEncoder;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public void saveUser(UserDTO userDto) {
         User user = new User();
         user.setUsername(userDto.getUsername());
-        user.setPassword(PASSWORD_ENCODER.encode(userDto.getPassword()));
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         boolean isDoctor = userDto.getIsDoctor();
         user.setIsDoctor(isDoctor);
 
         Role role;
         if (isDoctor) {
-            role = ROLE_REPOSITORY.findByName("DOCTOR");
+            role = roleRepository.findByName("DOCTOR");
         } else {
-            role = ROLE_REPOSITORY.findByName("PATIENT");
+            role = roleRepository.findByName("PATIENT");
         }
 
         if (role == null) {
@@ -47,17 +47,17 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setRoles(List.of(role));
-        USER_REPOSITORY.save(user);
+        userRepository.save(user);
     }
 
     @Override
     public User findUserByUsername(String username) {
-        return USER_REPOSITORY.findByUsername(username);
+        return userRepository.findByUsername(username);
     }
 
     @Override
     public List<UserDTO> findAllUsers() {
-        List<User> users = USER_REPOSITORY.findAll();
+        List<User> users = userRepository.findAll();
 
         return users.stream()
                 .map(this::mapToUserDto)
@@ -78,6 +78,6 @@ public class UserServiceImpl implements UserService {
         } else {
             role.setName("PATIENT");
         }
-        return ROLE_REPOSITORY.save(role);
+        return roleRepository.save(role);
     }
 }
