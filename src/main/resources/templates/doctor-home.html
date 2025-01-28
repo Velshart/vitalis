@@ -13,10 +13,9 @@
     </div>
     <nav>
         <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a th:href="@{/doctor/home}">Panel główny</a></li>
+            <li><a th:href="@{/doctor/choose-specializations}">Moje specializacje</a></li>
+            <li><a th:href="@{/logout}">Wyloguj się</a></li>
         </ul>
     </nav>
 </header>
@@ -32,10 +31,6 @@
     <button type="submit">Wizyty oczekujące na zatwierdzenie</button>
 </form>
 <br>
-
-<form th:action="@{/doctor/choose-specializations}" method="get">
-    <button type="submit">Moje specjalizacje</button>
-</form><br>
 
 <form th:action="@{/doctor/owned-clinics}" method="get">
     <button type="submit">Moje Kliniki</button>
@@ -56,10 +51,7 @@
 </form>
 <br>
 
-<form th:action="@{/logout}" method="post">
-    <button type="submit">Wyloguj się</button>
-</form>
-<br>
+
     </div>
 </div>
 </div>

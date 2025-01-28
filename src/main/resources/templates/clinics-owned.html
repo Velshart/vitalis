@@ -12,7 +12,13 @@
     <div class="logo">
         <img src="/img/logo.png" alt="Logo">
     </div>
-
+    <nav>
+        <ul>
+            <li><a th:href="@{/doctor/home}">Panel główny</a></li>
+            <li><a th:href="@{/doctor/choose-specializations}">Moje specializacje</a></li>
+            <li><a th:href="@{/logout}">Wyloguj się</a></li>
+        </ul>
+    </nav>
 </header>
 <div class="main-content">
     <div class="container">

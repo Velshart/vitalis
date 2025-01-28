@@ -13,10 +13,8 @@
     </div>
     <nav>
         <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a th:href="@{/patient/home}">Panel główny</a></li>
+            <li><a th:href="@{/logout}">Wyloguj się</a></li>
         </ul>
     </nav>
 </header>
@@ -30,10 +28,6 @@
             <br>
             <form th:action="@{/appointment/choose-clinic}" method="get">
                 <button type="submit">Zapisz się na wizytę</button>
-            </form>
-            <br>
-            <form th:action="@{/logout}" method="post">
-                <button type="submit">Wyloguj się</button>
             </form>
             <br>
         </div>
