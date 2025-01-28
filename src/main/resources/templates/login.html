@@ -12,15 +12,8 @@
     <div class="logo">
         <img src="/img/logo.png" alt="Logo">
     </div>
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
 </header>
+<div class="main-content">
 <div class="container">
     <h1>Logowanie</h1>
     <form th:action="@{/login}" method="post">
@@ -41,6 +34,7 @@
             <button type="button" onclick="window.location.href='/register'">Zarejestruj się teraz</button>
         </div>
     </form>
+</div>
 </div>
 </body>
 </html>

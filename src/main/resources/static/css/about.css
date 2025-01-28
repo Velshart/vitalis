@@ -55,13 +55,20 @@ nav ul li a:hover {
     background-color: #3b6a8a;
 }
 
-.main-content {
+.main-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     width: calc(100% - 200px);
     margin-left: 200px;
     height: 100vh;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .container {
@@ -79,50 +86,28 @@ h1 {
     margin-bottom: 20px;
 }
 
-.form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #f0f0f0;
-    width: 100%;
-    max-width: 600px;
+h2 {
+    color: #4d88aa;
+    margin-bottom: 20px;
 }
 
-label {
-    margin-bottom: 5px;
+p {
     color: #333;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-select, input, textarea, button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    margin-top: 15px;
-    box-sizing: border-box;
+ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-textarea {
-    resize: vertical;
+ul li {
+    margin-bottom: 10px;
+    color: #333;
+    text-align: center;
 }
 
-button {
-    width: 400px;
-    padding: 10px 20px;
-    background-color: #0c3761;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #0d4276;
-}
-
-button[type="submit"] {
-    margin-bottom: 0;
+ul li strong {
+    color: #4d88aa;
 }

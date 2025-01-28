@@ -58,10 +58,12 @@ nav ul li a:hover {
 .main-content {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     width: calc(100% - 200px);
     margin-left: 200px;
-    height: 100vh;
+    padding: 20px;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .container {
@@ -70,8 +72,9 @@ nav ul li a:hover {
     align-items: center;
     justify-content: center;
     height: auto;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 20px;
+    width: 100%;
+    max-width: 800px;
 }
 
 h1 {
@@ -110,7 +113,6 @@ textarea {
 }
 
 button {
-    width: 400px;
     padding: 10px 20px;
     background-color: #0c3761;
     color: white;

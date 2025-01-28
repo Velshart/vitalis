@@ -10,8 +10,8 @@ header {
     flex-direction: column;
     align-items: center;
     width: 200px;
-    height: auto;
-    position: sticky;
+    height: 100vh;
+    position: fixed;
     background: #4d88aa;
     color: #f1f1f1;
     padding-top: 20px;
@@ -54,12 +54,21 @@ nav ul li a:hover {
     background-color: #3b6a8a;
 }
 
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 200px;
+    width: calc(100% - 200px);
+    height: 100vh;
+}
+
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-left: 220px;
     height: auto;
     margin-left: auto;
     margin-right: auto;

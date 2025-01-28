@@ -3,20 +3,21 @@ body {
   height: 100vh;
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #ffffff; /* Set the background color to white */
+  background-color: #ffffff;
 }
 
 header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 200px; /* Set a fixed width for the header */
-  height: 100vh; /* Make the header full height */
-  position: fixed; /* Fix the header to the left side */
+  width: 200px;
+  height: 100vh;
+  position: fixed;
   background: #4d88aa;
   color: #f1f1f1;
   padding-top: 20px;
 }
+
 
 .logo {
   display: flex;
@@ -59,9 +60,9 @@ nav ul li a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: calc(100% - 200px); /* Adjust width to account for the header */
-  margin-left: 200px; /* Add margin to the left to make space for the header */
-  height: 100vh; /* Ensure the main content takes full height */
+  width: calc(100% - 200px);
+  margin-left: 200px;
+  height: 100vh;
 }
 
 .container {
@@ -87,7 +88,7 @@ h1 {
   border: 1px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #f0f0f0; /* Set the background color of the form to gray */
+  background-color: #f0f0f0;
   width: 100%;
   max-width: 600px;
 }
@@ -106,12 +107,12 @@ select, input, textarea, button {
 }
 
 textarea {
-  resize: vertical; /* Allow vertical resizing */
+  resize: vertical;
 }
 
 button {
   padding: 10px 20px;
-  background-color: #0c3761; /* Set the button background color to blue */
+  background-color: #0c3761;
   color: white;
   border: none;
   border-radius: 5px;
@@ -119,7 +120,7 @@ button {
 }
 
 button:hover {
-  background-color: #0d4276; /* Darken the button color on hover */
+  background-color: #0d4276;
 }
 
 button[type="submit"] {
@@ -127,8 +128,8 @@ button[type="submit"] {
 }
 
 .checkbox-container {
-  max-height: 200px; /* Set the maximum height for the container */
-  overflow-y: auto; /* Enable vertical scrolling */
-  border: 1px solid #ccc; /* Optional: Add a border to the container */
-  padding: 10px; /* Optional: Add padding to the container */
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
 }

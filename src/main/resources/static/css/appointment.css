@@ -1,10 +1,9 @@
-/* layout.css */
 body {
   display: flex;
   height: 100vh;
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #ffffff; /* Set the background color to white */
+  background-color: #ffffff;
 }
 
 header {
@@ -12,8 +11,8 @@ header {
   flex-direction: column;
   align-items: center;
   width: 200px;
-  height: auto;
-  position: sticky;
+  height: 100vh;
+  position: fixed;
   background: #4d88aa;
   color: #f1f1f1;
   padding-top: 20px;
@@ -56,6 +55,23 @@ nav ul li a:hover {
   background-color: #3b6a8a;
 }
 
+.main-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% - 200px);
+  margin-left: 200px;
+  height: 100vh;
+}
+
+.main-content {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -70,6 +86,7 @@ h2 {
   color: #4d88aa;
   margin-bottom: 20px;
 }
+
 h1 {
   color: #4d88aa;
   margin-bottom: 20px;
@@ -83,7 +100,7 @@ h1 {
   border: 1px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #f0f0f0; /* Set the background color of the form to gray */
+  background-color: #f0f0f0;
   width: 100%;
   max-width: 600px;
 }
@@ -108,7 +125,6 @@ button {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  
 }
 
 button:hover {
